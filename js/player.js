@@ -3,7 +3,12 @@ function Player(game) {
   this.y = 620;
   this.game = game;
 
-  this.vx = 30;
+  this.vx = 5;
+  this.ax = 5;
+
+  if (this.ax >= 15) {
+    this.ax == 15
+  }
 
   this.width = 80;
   this.height = 100;
@@ -32,12 +37,16 @@ Player.prototype.draw = function() {
 Player.prototype.setListeners = function() {
   document.onkeydown = function(e) {
     if (e.keyCode == 37 && this.x > 0) {
-      this.x -= this.vx;
+      this.x -= this.vx * this.ax;
     } else if (
       e.keyCode === 39 &&
       this.x + this.width < this.game.canvas.width
     ) {
-      this.x += this.vx;
+      this.x += this.vx * this.ax;
     }
   }.bind(this);
 };
+
+Player.prototype.shoot = function () {
+  
+}
