@@ -1,6 +1,6 @@
 function Projectile (game) {
-  this.width = 5;
-  this.height = 10;
+  this.width = 10;
+  this.height = 15;
   this.game = game;
 
   this.x =  this.game.player.x + (this.game.player.width / 2);

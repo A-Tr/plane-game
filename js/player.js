@@ -69,8 +69,7 @@ Player.prototype.setListeners = function() {
 Player.prototype.move = function() {
   if (this.moveLeft == true && this.x > 0) {
     this.x -= this.vx * this.ax;
-  } else if (this.moveRight == true && (this.x + this.width) <= 400) {
-    console.log(this.game.width)
+  } else if (this.moveRight == true && (this.x + this.width) <= this.game.canvas.width) {
     this.x += this.vx * this.ax;
   } else if (this.moveLeft == false) {
     this.x = this.x;
