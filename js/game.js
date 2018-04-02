@@ -2,12 +2,12 @@ function Game(canvas) {
   this.canvas = document.getElementById(canvas)  
   this.ctx = this.canvas.getContext("2d");
   this.gameOn = false
-  this.reset()
+  
 }
 
 Game.prototype.start = function() {
-  this.gameOn = true;
-
+  
+  this.reset()
   this.interval = setInterval( function () {
     this.clear();
     this.move();
@@ -17,6 +17,7 @@ Game.prototype.start = function() {
       this.framesCounter = 0
     }
   }.bind(this), 1000/60);
+  this.gameOn = true;
 };
 
 Game.prototype.clear = function() {
@@ -40,6 +41,7 @@ Game.prototype.reset = function () {
 
 Game.prototype.move = function () {
   this.background.move();
+  this.player.move();
   this.player.projectiles.forEach(function(p) {
     p.move();
   })

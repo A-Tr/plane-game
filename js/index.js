@@ -2,12 +2,13 @@ window.onload = function() {
   var game = new Game("canvas");
 
   document.getElementById("start-btn").onclick = function() {
-    game.start();
+    if (game.gameOn==true){return}
+    else {game.start()};
   };
 
-  document.getElementById("start-btn").onclick = function() {
+/*   document.getElementById("reset-btn").onclick = function() {
     clearInterval
     game.reset();
     game.start();
-  }
+  } */
 };
