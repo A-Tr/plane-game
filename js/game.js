@@ -13,8 +13,8 @@ Game.prototype.start = function() {
     function() {
       this.clear();
       this.generateEnemy();
-      this.move();
       this.checkEnemyDamage();
+      this.move();
       this.draw();
       this.framesCounter += 1;
       if (this.framesCounter >= 10000) {
@@ -33,12 +33,16 @@ Game.prototype.clear = function() {
 Game.prototype.draw = function() {
   this.background.draw();
   this.enemies.forEach(function(e) {
-    e.draw();
+    e.draw()
   });
   this.player.draw();
 };
 
 Game.prototype.reset = function() {
+  this.gameOn = false;
+  var that = this;
+  clearInterval(this.interval)
+  this.clear()
   this.background = new Background(this);
   this.player = new Player(this);
   this.enemies = [];
@@ -57,10 +61,18 @@ Game.prototype.move = function() {
 };
 
 Game.prototype.generateEnemy = function() {
-  if (this.framesCounter % 100 == 0 && this.enemiesGenerated < 10) {
-    this.enemies.push(new Enemy(this));
+  if (this.framesCounter % 100 == 0 && this.enemiesGenerated <= 2) {
+    this.enemies.push(new Enemy(this, 1));
     this.enemiesGenerated++;
-  }
+  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 2 && this.enemiesGenerated <= 5) {
+    this.enemies.push(new Enemy(this, 2));
+    this.enemiesGenerated++;
+  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 5 && this.enemiesGenerated <= 8) {
+    this.enemies.push(new Enemy(this, 3));
+    this.enemiesGenerated++;
+  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 8 && this.enemiesGenerated <= 11 ){
+    this.enemies.push(new Enemy (this, 4))
+  } 
 };
 
 

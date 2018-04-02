@@ -6,8 +6,7 @@ window.onload = function() {
     else {game.start()};
   };
 
-  document.getElementById("reset-btn").onclick = function() {
-    clearInterval
+  document.getElementById("restart-btn").onclick = function() {
     game.reset();
     game.start();
   }
