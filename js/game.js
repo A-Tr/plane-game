@@ -14,7 +14,7 @@ Game.prototype.start = function() {
       this.clear();
       this.generateEnemy();
       this.move();
-      this.checkCollision();
+      this.checkEnemyDamage();
       this.draw();
       this.framesCounter += 1;
       if (this.framesCounter >= 10000) {
@@ -57,7 +57,7 @@ Game.prototype.move = function() {
 };
 
 Game.prototype.generateEnemy = function() {
-  if (this.framesCounter % 100 == 0) {
+  if (this.framesCounter % 100 == 0 && this.enemiesGenerated < 10) {
     this.enemies.push(new Enemy(this));
     this.enemiesGenerated++;
   }
@@ -65,7 +65,7 @@ Game.prototype.generateEnemy = function() {
 
 
 //Comprobar colisiones
-Game.prototype.checkCollision = function() {
+Game.prototype.checkEnemyDamage = function() {
   var that = this;
   this.player.projectiles.forEach(function(p) {
     that.enemies.forEach(function(e) {
@@ -75,12 +75,15 @@ Game.prototype.checkCollision = function() {
         p.y < e.y + e.height &&
         p.y + p.height > e.y
       ) {
+        e.health -= p.damage
         var indexE = that.enemies.indexOf(e);
         var indexP = that.player.projectiles.indexOf(p);
         console.log(indexP)
         if (indexE > -1) {
-          that.enemies.splice(indexE, 1);
           that.player.projectiles.splice(indexP, 1)
+          if(e.health <= 0){
+            that.enemies.splice(indexE, 1)
+          }
         }
       }
     });

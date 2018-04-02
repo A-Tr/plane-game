@@ -6,9 +6,9 @@ window.onload = function() {
     else {game.start()};
   };
 
-/*   document.getElementById("reset-btn").onclick = function() {
+  document.getElementById("reset-btn").onclick = function() {
     clearInterval
     game.reset();
     game.start();
-  } */
+  }
 };
