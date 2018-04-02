@@ -72,7 +72,13 @@ Game.prototype.generateEnemy = function() {
     this.enemiesGenerated++;
   } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 8 && this.enemiesGenerated <= 11 ){
     this.enemies.push(new Enemy (this, 4))
-  } 
+    this.enemiesGenerated++;
+  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated == 12) {
+    this.enemies.push(new Enemy(this, 5));
+    this.enemiesGenerated++;
+  } else if (this.enemiesGenerated == 12) {
+    return;
+  }
 };
 
 
@@ -90,7 +96,6 @@ Game.prototype.checkEnemyDamage = function() {
         e.health -= p.damage
         var indexE = that.enemies.indexOf(e);
         var indexP = that.player.projectiles.indexOf(p);
-        console.log(indexP)
         if (indexE > -1) {
           that.player.projectiles.splice(indexP, 1)
           if(e.health <= 0){

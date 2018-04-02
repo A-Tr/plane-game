@@ -6,10 +6,13 @@ function Enemy(game, enemyType) {
 
   this.game = game;
 
-  this.width = 60;
-  this.height = 60;
+  this.width = 98;
+  this.height = 50;
 
-  this.health = 1;
+  this.health = 3;
+
+  this.img = new Image();
+  this.img.src = "images/enemy_one_sprite.png";
 
   //Tipos de enemigos
   if (enemyType === 1){
@@ -33,13 +36,31 @@ function Enemy(game, enemyType) {
     this.x = this.game.canvas.width - this.width;
   }
 
-  this.health = 1;
+  if (enemyType === 5) {
+    this.vx = 2;
+    this.vy = 0;
+    this.x = 50;
+    this.width = 300;
+    this.height = 200;
+    this.health = 30;
+    this.img.src = "images/boss.png"
+  }
+
 
 }
 
 Enemy.prototype.draw = function() {
-  this.game.ctx.fillStyle = "#00FF00";
-  this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+  this.game.ctx.drawImage(
+    this.img,
+    0,
+    0,
+    this.img.width,
+    this.img.height,
+    this.x,
+    this.y,
+    this.width,
+    this.height
+  );
 
 };
 

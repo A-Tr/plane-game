@@ -1,7 +1,10 @@
 function Projectile (game) {
-  this.width = 10;
-  this.height = 15;
+  this.width = 15;
+  this.height = 30;
   this.game = game;
+
+  this.img = new Image();
+  this.img.src = "images/missile.png"
 
   this.x =  this.game.player.x + (this.game.player.width / 2);
   this.y = this.game.player.y - this.height;
@@ -12,8 +15,17 @@ function Projectile (game) {
 }
 
 Projectile.prototype.draw = function () {
-  this.game.ctx.fillStyle = "#FF0000";
-  this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
+  this.game.ctx.drawImage(
+    this.img,
+    0,
+    0,
+    this.img.width,
+    this.img.height,
+    this.x,
+    this.y,
+    this.width,
+    this.height
+  );
 }
 
 Projectile.prototype.move = function () {
