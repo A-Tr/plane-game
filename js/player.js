@@ -4,14 +4,10 @@ function Player(game) {
   this.game = game;
 
   this.vx = 1;
-  this.ax = 3;
+  this.ax = 5;
 
   this.moveLeft = false;
   this.moveRight = false;
-
-  if (this.ax >= 12) {
-    this.ax == 12;
-  }
 
   this.width = 80;
   this.height = 100;

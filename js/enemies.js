@@ -4,7 +4,7 @@ function Enemy(game) {
 
   this.game = game;
 
-  this.vx = 2;
+  this.vx = 5;
   this.vy = 1;
 
   this.width = 60;
