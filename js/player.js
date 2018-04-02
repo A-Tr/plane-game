@@ -82,5 +82,4 @@ Player.prototype.move = function() {
 
 Player.prototype.shoot = function() {
   this.projectiles.push(new Projectile(this.game));
-  console.log(this.projectiles);
 };
