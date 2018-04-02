@@ -1,14 +1,7 @@
-@font-face {
-  font-family: Tron;
-  src:("../fonts/TRON.TTF");
-}
-
-
-
 body {
   background-image: url("../images/page-bg.jpg");
   background-size: contain;
-  font-family: Tron; 
+  font-family: 'Orbitron', sans-serif;
 
   font-size: 20px
 }
@@ -30,12 +23,19 @@ canvas {
 button {
   width: 200px;
   height: 80px;
+  font-family: 'Orbitron', sans-serif;
   border-radius: 10px;
   background-color: darkmagenta;
   margin: 0 50px;
   text-align: center;
   vertical-align: middle;
-  color: mediumaquamarine;
+  color: #347eed;
   font-size: 24px;
   font-weight: bold;
+  margin: 50px;
+}
+
+img {
+  display: inline-block;
+  margin-top: 30px;
 }

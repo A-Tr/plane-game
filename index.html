@@ -14,19 +14,22 @@
 
   <script type="text/javascript" src="js/game.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
-  
+
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <title>Document</title>
 </head>
 <body>
-  <audio id="theme" src="sounds/theme.mp3"></audio>
+  <audio id="theme" src="sounds/theme.mp3" autoplay loop></audio>
   <div id="instructions">
     <h1>VAPOR PLANES</h1> 
     <p>Eres el bueno, ve a por los malos y frieles a tiros</p>
     <button id="start-btn">START GAME</button>
-    <button id="restart-btn">Restart Game</button>
+    <button id="restart-btn">Restart</button>
+    
   </div>
 
   <canvas id="canvas" width="400" height="800"></canvas>
+  <img src="images/controls.png">
 </body>
 </html>
