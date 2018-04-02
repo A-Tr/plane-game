@@ -13,7 +13,10 @@ function Player(game) {
   this.width = 80;
   this.height = 100;
 
+
+
   this.health = 5;
+  this.projectiles = [];
 
   this.img = new Image();
   this.img.src = "images/plane.png";
@@ -32,6 +35,14 @@ Player.prototype.draw = function() {
     this.width,
     this.height
   );
+
+  this.projectiles = this.projectiles.filter(function(p) {
+    return p.y > 0;
+  });
+
+  this.projectiles.forEach(function (p) {
+    p.draw();
+  })
 };
 
 Player.prototype.setListeners = function() {
@@ -43,10 +54,16 @@ Player.prototype.setListeners = function() {
       this.x + this.width < this.game.canvas.width
     ) {
       this.x += this.vx * this.ax;
-    }
+    } else if (
+      e.keyCode === 32) {
+        this.shoot()
+      }
+    
   }.bind(this);
 };
 
-Player.prototype.shoot = function () {
-  
-}
+Player.prototype.shoot = function() {
+  this.projectiles.push(new Projectile(this.game));
+  console.log(this.projectiles);
+
+};

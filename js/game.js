@@ -1,14 +1,15 @@
 function Game(canvas) {
   this.canvas = document.getElementById(canvas)  
   this.ctx = this.canvas.getContext("2d");
-
+  this.gameOn = false
   this.reset()
 }
 
-Game.prototype.start = function() { 
+Game.prototype.start = function() {
+  this.gameOn = true;
+
   this.interval = setInterval( function () {
     this.clear();
-    // this.moveAll();
     this.move();
     this.draw();
     this.framesCounter += 1;
@@ -27,6 +28,7 @@ Game.prototype.clear = function() {
 Game.prototype.draw = function () {
   this.background.draw();  
   this.player.draw();
+
 }
 
 Game.prototype.reset = function () {
@@ -38,4 +40,8 @@ Game.prototype.reset = function () {
 
 Game.prototype.move = function () {
   this.background.move();
+  this.player.projectiles.forEach(function(p) {
+    p.move();
+  })
+  
 }
