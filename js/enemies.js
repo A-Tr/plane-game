@@ -1,4 +1,4 @@
-function Enemy(game, enemyType) {
+function Enemy(game, enemyType, enemyNumber) {
   this.x = 0;
   this.y = 0;
   
@@ -6,6 +6,7 @@ function Enemy(game, enemyType) {
   
   this.game = game;
   
+  this.enemyNumber = enemyNumber;
   this.width = 98;
   this.height = 50;
 
@@ -84,7 +85,6 @@ Enemy.prototype.move = function() {
     }
 };
 
-/* Enemy.prototype.shoot = function() {
+Enemy.prototype.shoot = function() {
   this.enemyProjectiles.push(new EnemyProjectile(this.game));
-  console.log(enemyProjectiles)
-}; */
+};

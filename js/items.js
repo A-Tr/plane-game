@@ -1,11 +1,12 @@
 function Item(game) {
-  this.x = Math.floor(Math.random() * 400);
   this.y = 0;
-
+  
   this.width = 40;
   this.height = 40;
-  this.vy = 8;
+  this.vy = 4;
   this.game = game;
+  
+  this.x = this.width + Math.floor(Math.random() * 400 - this.width);
 }
 
 Item.prototype.draw = function () {

@@ -6,7 +6,7 @@ function EnemyProjectile (game) {
   this.img = new Image();
   this.img.src = "images/missile.png"
 
-  this.x =  200;
+  this.x =  5;
   this.y = 50;
 
   this.vy = 10;
@@ -14,7 +14,7 @@ function EnemyProjectile (game) {
   this.damage = 1;
 }
 
-Projectile.prototype.draw = function () {
+/* EnemyProjectile.prototype.draw = function () {
   this.game.ctx.drawImage(
     this.img,
     0,
@@ -26,8 +26,12 @@ Projectile.prototype.draw = function () {
     this.width,
     this.height
   );
+} */
+
+EnemyProjectile.prototype.draw = function () {
+  this.game.ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
-Projectile.prototype.move = function () {
+EnemyProjectile.prototype.move = function () {
   this.y += this.vy;
 }
