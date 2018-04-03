@@ -57,7 +57,7 @@ Game.prototype.gameOver = function () {
   alert("game over")
 }
 
-
+// Dibujar objetos
 Game.prototype.draw = function() {
   this.background.draw();
   this.enemies.forEach(function(e) {
@@ -72,6 +72,7 @@ Game.prototype.draw = function() {
   this.player.draw();
 };
 
+//Mover objetos
 Game.prototype.move = function() {
   this.background.move();
   this.enemies.forEach(function(e) {
@@ -83,7 +84,6 @@ Game.prototype.move = function() {
   this.items.forEach(function(i) {
     i.move();
   });
-
   this.player.move();
   this.player.projectiles.forEach(function(p) {
     p.move();
@@ -93,7 +93,9 @@ Game.prototype.move = function() {
 //Generar objetos
 Game.prototype.generateItem = function() {
   if (this.framesCounter % 300 == 0) {
-    this.items.push(new Item(this));
+    this.items.push(new Item(this, 1));
+  } else if (this.framesCounter == 1000){
+    this.items.push(new Item(this, 2));
   }
 };
 
@@ -131,6 +133,8 @@ Game.prototype.generateEnemy = function() {
     return;
   }
 };
+
+//Disparo enemigo
 
 Game.prototype.enemyShoot = function() {
   if (this.framesCounter % 100 == 0) {
@@ -201,8 +205,10 @@ Game.prototype.enemyShoot = function() {
         var indexI = that.items.indexOf(i);
         if (indexI > -1) {
           that.items.splice(indexI, 1);
-          that.player.item.push(i);
           that.score += 100;
+          if (i.itemType == 2) {
+            that.player.playerLevel = 2;
+          }
         }
       }
     });

@@ -1,4 +1,4 @@
-function Projectile (game) {
+function Projectile (game, playerLevel) {
   this.width = 15;
   this.height = 30;
   this.game = game;
@@ -12,20 +12,49 @@ function Projectile (game) {
   this.vy = -10;
 
   this.damage = 1;
+
+  this.playerLevel = playerLevel
 }
 
+
 Projectile.prototype.draw = function () {
-  this.game.ctx.drawImage(
-    this.img,
-    0,
-    0,
-    this.img.width,
-    this.img.height,
-    this.x,
-    this.y,
-    this.width,
-    this.height
-  );
+  if (this.playerLevel == 1){
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x - 15,
+      this.y,
+      this.width,
+      this.height
+    );
+  } else if (this.playerLevel == 2) {
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x + 15,
+      this.y,
+      this.width,
+      this.height
+    );
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  }
+  
 }
 
 Projectile.prototype.move = function () {
