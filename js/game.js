@@ -19,6 +19,7 @@ Game.prototype.start = function() {
       this.enemyShoot();
       this.checkEnemyDamage();
       this.checkItem();
+      this.checkPlayerDamage();
       this.move();
       this.draw();
       this.framesCounter += 1;
@@ -46,6 +47,7 @@ Game.prototype.reset = function() {
   this.framesCounter = 0;
   this.enemiesGenerated = 0;
 };
+
 Game.prototype.draw = function() {
   this.background.draw();
   this.enemies.forEach(function(e) {
@@ -80,7 +82,7 @@ Game.prototype.move = function() {
 
 //Generar objetos
 Game.prototype.generateItem = function() {
-  if (this.framesCounter % 300 == 0){
+  if (this.framesCounter % 300 == 0) {
     this.items.push(new Item(this));
   }
 };
@@ -115,19 +117,17 @@ Game.prototype.generateEnemy = function() {
   } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated == 12) {
     this.enemies.push(new Enemy(this, 5, this.enemiesGenerated));
     this.enemiesGenerated++;
-  } else if (this.enemiesGenerated == 12, this.enemiesGenerated) {
+  } else if ((this.enemiesGenerated == 12, this.enemiesGenerated)) {
     return;
   }
 };
 
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 200 == 0) {
+  if (this.framesCounter % 50 == 0) {
     this.enemies.forEach(function(e) {
       e.shoot();
     });
   }
-
-
 
   //Comprobar colisiones
   Game.prototype.checkEnemyDamage = function() {
@@ -154,6 +154,45 @@ Game.prototype.enemyShoot = function() {
       });
     });
   };
+
+  Game.prototype.checkPlayerDamage = function() {
+    var that = this;
+    this.enemies.forEach(function(e) {
+      e.enemyProjectiles.forEach(function(ep) {
+        if (
+          ep.x < that.player.x + that.player.width &&
+          ep.x + ep.width > that.player.x &&
+          ep.y < that.player.y + that.player.height &&
+          ep.y + ep.height > that.player.y
+        ) {
+          // var indexEp = that.enemies[0].enemyProjectiles.indexOf(ep)
+          // that.player.health -= 1;
+
+          //that.enemies.enemyProjectiles.splice(indexEp, 1)
+          console.log(that.player.health)
+        }
+      });
+    });
+  };
+  /*  if (
+        p.x < e.x + e.width &&
+        p.x + p.width > e.x &&
+        p.y < e.y + e.height &&
+        p.y + p.height > e.y
+      ) {
+        e.health -= p.damage;
+        var indexE = that.enemies.indexOf(e);
+        var indexP = that.player.projectiles.indexOf(p);
+        if (indexE > -1) {
+          that.player.projectiles.splice(indexP, 1);
+          if (e.health <= 0) {
+            that.enemies.splice(indexE, 1);
+            that.player.score += 5;
+          }
+        }
+      }
+    });
+  }); */
 
   Game.prototype.checkItem = function() {
     var that = this;

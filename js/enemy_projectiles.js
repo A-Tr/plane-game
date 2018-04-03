@@ -1,20 +1,20 @@
-function EnemyProjectile (game) {
+function EnemyProjectile (game, x, y) {
   this.width = 15;
   this.height = 30;
   this.game = game;
 
   this.img = new Image();
-  this.img.src = "images/missile.png"
+  this.img.src = "images/enemy_missile.png"
 
-  this.x =  5;
-  this.y = 50;
+  this.x = x;
+  this.y = y;
 
   this.vy = 10;
 
   this.damage = 1;
 }
 
-/* EnemyProjectile.prototype.draw = function () {
+EnemyProjectile.prototype.draw = function () {
   this.game.ctx.drawImage(
     this.img,
     0,
@@ -26,10 +26,6 @@ function EnemyProjectile (game) {
     this.width,
     this.height
   );
-} */
-
-EnemyProjectile.prototype.draw = function () {
-  this.game.ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
 EnemyProjectile.prototype.move = function () {
