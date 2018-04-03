@@ -52,6 +52,12 @@ Game.prototype.reset = function() {
   this.enemiesGenerated = 0;
 };
 
+Game.prototype.gameOver = function () {
+  clearInterval(this.interval);
+  alert("game over")
+}
+
+
 Game.prototype.draw = function() {
   this.background.draw();
   this.enemies.forEach(function(e) {
@@ -127,7 +133,7 @@ Game.prototype.generateEnemy = function() {
 };
 
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 50 == 0) {
+  if (this.framesCounter % 100 == 0) {
     this.enemies.forEach(function(e) {
       e.shoot();
     });
@@ -169,11 +175,15 @@ Game.prototype.enemyShoot = function() {
           ep.y < that.player.y + that.player.height &&
           ep.y + ep.height > that.player.y
         ) {
-          // var indexEp = that.enemies[0].enemyProjectiles.indexOf(ep)
-          // that.player.health -= 1;
-
-          //that.enemies.enemyProjectiles.splice(indexEp, 1)
-          console.log(that.player.health);
+          var indexEp = e.enemyProjectiles.indexOf(ep);
+          if (indexEp > -1) {
+            that.player.health -= 1;
+            e.enemyProjectiles.splice(indexEp, 1);
+            console.log(that.player.health);
+          }
+          if (that.player.health <= 0) {
+            that.gameOver()
+          }
         }
       });
     });
@@ -200,6 +210,6 @@ Game.prototype.enemyShoot = function() {
 };
 
 // Actualizar puntuacion
-Game.prototype.updateScore = function () {
-  this.scoreboard.innerHTML = this.score
-}
+Game.prototype.updateScore = function() {
+  this.scoreboard.innerHTML = this.score;
+};
