@@ -2,7 +2,7 @@ function Player(game) {
   this.x = 160;
   this.y = 620;
   this.game = game;
-
+  
   this.vx = 1;
   this.ax = 5;
 
@@ -15,7 +15,6 @@ function Player(game) {
   this.health = 5;
   this.projectiles = [];
   this.item = []
-  this.score = 0;
 
   this.img = new Image();
   this.img.src = "images/plane.png";

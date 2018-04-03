@@ -2,7 +2,7 @@ body {
   background-image: url("../images/page-bg.jpg");
   background-size: contain;
   font-family: 'Orbitron', sans-serif;
-
+  color: #596cea;
   font-size: 20px
 }
 
@@ -14,10 +14,9 @@ canvas {
 }
 
 #instructions {
-  margin-left: 50px;
+  margin: 50px;
   width: 500px;
   float: left; 
-  color: #596cea;
 }
 
 button {
@@ -26,16 +25,21 @@ button {
   font-family: 'Orbitron', sans-serif;
   border-radius: 10px;
   background-color: darkmagenta;
-  margin: 0 50px;
+  margin: 20px 50px;
   text-align: center;
   vertical-align: middle;
   color: #347eed;
   font-size: 24px;
   font-weight: bold;
-  margin: 50px;
 }
 
 img {
   display: inline-block;
   margin-top: 30px;
+}
+
+#scoreboard {
+  float: left;
+  font-size: 20px;
+  margin: 50px 100px;
 }

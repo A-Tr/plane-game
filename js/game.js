@@ -6,6 +6,9 @@ function Game(canvas) {
   this.enemies = [];
   this.enemiesGenerated = 0;
   this.items = [];
+  this.score = 0;
+  this.scoreboard = document.getElementById("score");
+  console.log(this.scoreboard);
 }
 
 Game.prototype.start = function() {
@@ -14,6 +17,7 @@ Game.prototype.start = function() {
   this.interval = setInterval(
     function() {
       this.clear();
+      this.updateScore();
       this.generateEnemy();
       this.generateItem();
       this.enemyShoot();
@@ -147,7 +151,7 @@ Game.prototype.enemyShoot = function() {
             that.player.projectiles.splice(indexP, 1);
             if (e.health <= 0) {
               that.enemies.splice(indexE, 1);
-              that.player.score += 5;
+              that.score += 5;
             }
           }
         }
@@ -169,30 +173,11 @@ Game.prototype.enemyShoot = function() {
           // that.player.health -= 1;
 
           //that.enemies.enemyProjectiles.splice(indexEp, 1)
-          console.log(that.player.health)
+          console.log(that.player.health);
         }
       });
     });
   };
-  /*  if (
-        p.x < e.x + e.width &&
-        p.x + p.width > e.x &&
-        p.y < e.y + e.height &&
-        p.y + p.height > e.y
-      ) {
-        e.health -= p.damage;
-        var indexE = that.enemies.indexOf(e);
-        var indexP = that.player.projectiles.indexOf(p);
-        if (indexE > -1) {
-          that.player.projectiles.splice(indexP, 1);
-          if (e.health <= 0) {
-            that.enemies.splice(indexE, 1);
-            that.player.score += 5;
-          }
-        }
-      }
-    });
-  }); */
 
   Game.prototype.checkItem = function() {
     var that = this;
@@ -207,9 +192,14 @@ Game.prototype.enemyShoot = function() {
         if (indexI > -1) {
           that.items.splice(indexI, 1);
           that.player.item.push(i);
-          that.player.score += 100;
+          that.score += 100;
         }
       }
     });
   };
 };
+
+// Actualizar puntuacion
+Game.prototype.updateScore = function () {
+  this.scoreboard.innerHTML = this.score
+}

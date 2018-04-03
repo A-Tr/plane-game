@@ -86,5 +86,5 @@ Enemy.prototype.move = function() {
 };
 
 Enemy.prototype.shoot = function() {
-  this.enemyProjectiles.push(new EnemyProjectile(this.game, this.x, this.y));
+  this.enemyProjectiles.push(new EnemyProjectile(this.game, this.x + this.width / 2, this.y));
 };
