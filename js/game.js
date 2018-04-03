@@ -5,6 +5,7 @@ function Game(canvas) {
   this.framesCounter = 0;
   this.enemies = [];
   this.enemiesGenerated = 0;
+  this.items = [];
 }
 
 Game.prototype.start = function() {
@@ -13,6 +14,8 @@ Game.prototype.start = function() {
     function() {
       this.clear();
       this.generateEnemy();
+      this.generateItem();
+      // this.enemyShoot();
       this.checkEnemyDamage();
       this.move();
       this.draw();
@@ -33,20 +36,24 @@ Game.prototype.clear = function() {
 Game.prototype.draw = function() {
   this.background.draw();
   this.enemies.forEach(function(e) {
-    e.draw()
+    e.draw();
   });
+  this.items.forEach(function(i) {
+    i.draw();
+  })
   this.player.draw();
 };
 
 Game.prototype.reset = function() {
   this.gameOn = false;
   var that = this;
-  clearInterval(this.interval)
-  this.clear()
+  clearInterval(this.interval);
+  this.clear();
   this.background = new Background(this);
   this.player = new Player(this);
   this.enemies = [];
   this.framesCounter = 0;
+  this.enemiesGenerated = 0;
 };
 
 Game.prototype.move = function() {
@@ -54,6 +61,11 @@ Game.prototype.move = function() {
   this.enemies.forEach(function(e) {
     e.move();
   });
+
+  this.items.forEach(function(i) {
+    i.move();
+  });
+
   this.player.move();
   this.player.projectiles.forEach(function(p) {
     p.move();
@@ -64,14 +76,26 @@ Game.prototype.generateEnemy = function() {
   if (this.framesCounter % 100 == 0 && this.enemiesGenerated <= 2) {
     this.enemies.push(new Enemy(this, 1));
     this.enemiesGenerated++;
-  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 2 && this.enemiesGenerated <= 5) {
+  } else if (
+    this.framesCounter % 100 == 0 &&
+    this.enemiesGenerated > 2 &&
+    this.enemiesGenerated <= 5
+  ) {
     this.enemies.push(new Enemy(this, 2));
     this.enemiesGenerated++;
-  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 5 && this.enemiesGenerated <= 8) {
+  } else if (
+    this.framesCounter % 100 == 0 &&
+    this.enemiesGenerated > 5 &&
+    this.enemiesGenerated <= 8
+  ) {
     this.enemies.push(new Enemy(this, 3));
     this.enemiesGenerated++;
-  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 8 && this.enemiesGenerated <= 11 ){
-    this.enemies.push(new Enemy (this, 4))
+  } else if (
+    this.framesCounter % 100 == 0 &&
+    this.enemiesGenerated > 8 &&
+    this.enemiesGenerated <= 11
+  ) {
+    this.enemies.push(new Enemy(this, 4));
     this.enemiesGenerated++;
   } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated == 12) {
     this.enemies.push(new Enemy(this, 5));
@@ -81,6 +105,19 @@ Game.prototype.generateEnemy = function() {
   }
 };
 
+Game.prototype.generateItem = function () {
+  if (this.framesCounter % 600 == 0  && this.framesCounter > 0) {
+    this.items.push(new Item(this))
+    console.log(this.items)
+  }
+}
+/* Game.prototype.enemyShoot = function() {
+  if (this.framesCounter % 1000 === 0) {
+    this.enemies.forEach(function(e) {
+      e.shoot();
+    });
+  }
+}; */
 
 //Comprobar colisiones
 Game.prototype.checkEnemyDamage = function() {
@@ -93,13 +130,13 @@ Game.prototype.checkEnemyDamage = function() {
         p.y < e.y + e.height &&
         p.y + p.height > e.y
       ) {
-        e.health -= p.damage
+        e.health -= p.damage;
         var indexE = that.enemies.indexOf(e);
         var indexP = that.player.projectiles.indexOf(p);
         if (indexE > -1) {
-          that.player.projectiles.splice(indexP, 1)
-          if(e.health <= 0){
-            that.enemies.splice(indexE, 1)
+          that.player.projectiles.splice(indexP, 1);
+          if (e.health <= 0) {
+            that.enemies.splice(indexE, 1);
           }
         }
       }

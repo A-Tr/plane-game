@@ -14,6 +14,7 @@ function Player(game) {
 
   this.health = 5;
   this.projectiles = [];
+  this.item = []
 
   this.img = new Image();
   this.img.src = "images/plane.png";
@@ -78,4 +79,5 @@ Player.prototype.move = function() {
 
 Player.prototype.shoot = function() {
   this.projectiles.push(new Projectile(this.game));
+  console.log(this.projectiles)
 };

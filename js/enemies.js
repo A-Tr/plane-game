@@ -1,18 +1,23 @@
 function Enemy(game, enemyType) {
   this.x = 0;
   this.y = 0;
-
+  
   this.vy = 1;
-
+  
   this.game = game;
-
+  
   this.width = 98;
   this.height = 50;
 
   this.health = 3;
+  this.enemyProjectiles = [];
 
   this.img = new Image();
   this.img.src = "images/enemy_one_sprite.png";
+
+  this.enemyProjectiles = this.enemyProjectiles.filter(function(p) {
+    return p.y < 800;
+  });
 
   //Tipos de enemigos
   if (enemyType === 1){
@@ -78,3 +83,8 @@ Enemy.prototype.move = function() {
       this.y += this.vy;
     }
 };
+
+/* Enemy.prototype.shoot = function() {
+  this.enemyProjectiles.push(new EnemyProjectile(this.game));
+  console.log(enemyProjectiles)
+}; */
