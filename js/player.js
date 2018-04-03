@@ -17,6 +17,8 @@ function Player(game) {
   this.item = []
   this.playerLevel = 1;
 
+  this.shootSound = new Audio("sounds/shoot.ogg")
+
   this.img = new Image();
   this.img.src = "images/plane.png";
   this.setListeners();
@@ -79,5 +81,16 @@ Player.prototype.move = function() {
 };
 
 Player.prototype.shoot = function() {
-  this.projectiles.push(new Projectile(this.game, this.playerLevel));
+  if (this.playerLevel == 1) {
+    this.projectiles.push(new Projectile(this.game, this.playerLevel));
+  } else if (this.playerLevel == 2) {
+    this.projectiles.push(new Projectile(this.game, 1));
+    this.projectiles.push(new Projectile(this.game, 2));
+  } else if (this.playerLevel >= 3) {
+    this.projectiles.push(new Projectile(this.game, 1));
+    this.projectiles.push(new Projectile(this.game, 2));
+    this.projectiles.push(new Projectile(this.game, 3));
+    this.projectiles.push(new Projectile(this.game, 4));
+  }
+  this.shootSound.play();
 };

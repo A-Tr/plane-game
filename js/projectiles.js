@@ -1,4 +1,4 @@
-function Projectile (game, playerLevel) {
+function Projectile (game, bulletType) {
   this.width = 15;
   this.height = 30;
   this.game = game;
@@ -13,35 +13,12 @@ function Projectile (game, playerLevel) {
 
   this.damage = 1;
 
-  this.playerLevel = playerLevel
+  this.bulletType = bulletType
 }
 
 
 Projectile.prototype.draw = function () {
-  if (this.playerLevel == 1){
-    this.game.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.img.width,
-      this.img.height,
-      this.x - 15,
-      this.y,
-      this.width,
-      this.height
-    );
-  } else if (this.playerLevel == 2) {
-    this.game.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.img.width,
-      this.img.height,
-      this.x + 15,
-      this.y,
-      this.width,
-      this.height
-    );
+  if (this.bulletType == 1){
     this.game.ctx.drawImage(
       this.img,
       0,
@@ -53,8 +30,55 @@ Projectile.prototype.draw = function () {
       this.width,
       this.height
     );
+  } else if (this.bulletType == 2) {
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x - 25,
+      this.y,
+      this.width,
+      this.height
+    );
+  } else if (this.bulletType == 3) {
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x + 25,
+      this.y,
+      this.width,
+      this.height
+    );
+  } else if (this.bulletType == 3){
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x - 50,
+      this.y,
+      this.width,
+      this.height
+    );
+  } else if (this.bulletType == 4){
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x + 50,
+      this.y,
+      this.width,
+      this.height
+    );
   }
-  
 }
 
 Projectile.prototype.move = function () {

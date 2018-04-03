@@ -1,4 +1,4 @@
-function Enemy(game, enemyType, enemyNumber) {
+function Enemy(game, enemyType) {
   this.x = 0;
   this.y = 0;
   
@@ -6,11 +6,10 @@ function Enemy(game, enemyType, enemyNumber) {
   
   this.game = game;
   
-  this.enemyNumber = enemyNumber;
   this.width = 98;
   this.height = 50;
 
-  this.health = 3;
+  this.health = 2;
   this.enemyProjectiles = [];
 
   this.img = new Image();

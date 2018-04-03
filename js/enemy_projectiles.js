@@ -9,7 +9,7 @@ function EnemyProjectile (game, x, y) {
   this.x = x;
   this.y = y;
 
-  this.vy = 10;
+  this.vy = 5;
 
   this.damage = 1;
 }

@@ -16,6 +16,8 @@ function Item(game, itemType) {
       this.game.ctx.fillStyle = "red";
     } else if (this.itemType == 2) {
       this.game.ctx.fillStyle = "blue";
+    } else if (this.itemType == 3) {
+      this.game.ctx.fillStyle = "green";
     }
     this.game.ctx.fillRect(this.x, this.y, this.width, this.height)
     }
