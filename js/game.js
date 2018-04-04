@@ -2,12 +2,17 @@ function Game(canvas) {
   this.canvas = document.getElementById(canvas);
   this.ctx = this.canvas.getContext("2d");
   this.gameOn = false;
+
   this.framesCounter = 0;
   this.enemies = [];
   this.enemiesGenerated = 0;
   this.items = [];
   this.score = 0;
   this.playerHealth = document.getElementById("player-health");
+
+  this.enemyTypes = ["typeOne", "typeTwo", "typeThree", "typeFour", "typeFive", "typeSix", "typeSeven", "typeEight", "randomEnemy"]
+
+  this.canGenerate = true;
 
   this.explosionSound = new Audio("sounds/explosion_one.ogg");
 }
@@ -23,8 +28,14 @@ Game.prototype.start = function() {
       });
       this.clear();
       
-      
-      this.generateEnemy(this.framesCounter, this.enemiesGenerated);
+      if (this.player.health <= 0) {
+        this.gameOver()
+        return;
+      }
+
+      if (this.canGenerate == true) {
+        this.generateEnemy(this.framesCounter, this.enemiesGenerated);
+      }
       this.generateItem();
       
       this.enemyShoot();
@@ -62,8 +73,12 @@ Game.prototype.reset = function() {
 
 // GAME OVER
 Game.prototype.gameOver = function() {
+  this.clear();
+  this.ctx.fillStyle = "red";
+  this.ctx.fillRect(0, 0, 400, 800);
+  this.ctx.fillStyle = "green";
+  this.ctx.fillText("HAS MUELTO", 150, 390);
   clearInterval(this.interval);
-  alert("game over");
 };
 
 // Limpiar pantalla
@@ -121,27 +136,46 @@ Game.prototype.move = function() {
 // Generar objetos
 Game.prototype.generateItem = function() {
   if (this.framesCounter % 300 == 0) {
-    this.items.push(new Item(this, 1));
-  } else if (this.framesCounter % 1000 == 0) {
-    this.items.push(new Item(this, 2));
+    this.items.push(new Item(this, "points"));
+  } else if (this.framesCounter % 400 == 0) {
+    this.items.push(new Item(this, "weapon"));
   }
 };
 
 // Generar enemigos
 Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
+  var that = this
   if (framesCounter % 100 == 0) {
     if (enemiesGenerated <= 2) {
-      this.enemies.push(new Enemy(this, "typeOne"));
+      this.enemies.push(new Enemy(this, this.enemyTypes[0]));
     } else if (enemiesGenerated > 2 && enemiesGenerated <= 5) {
-      this.enemies.push(new Enemy(this, "typeTwo"));
+      this.enemies.push(new Enemy(this, this.enemyTypes[1]));
     } else if (enemiesGenerated > 5 && enemiesGenerated <= 8) {
-      this.enemies.push(new Enemy(this, "typeThree"));
+      this.enemies.push(new Enemy(this, this.enemyTypes[2]));
     } else if (enemiesGenerated > 8 && enemiesGenerated <= 11) {
-      this.enemies.push(new Enemy(this, "typeFour"));
+      this.enemies.push(new Enemy(this, this.enemyTypes[3]));
     } else if (enemiesGenerated == 12) {
-      this.enemies.push(new Enemy(this, "boss"));
-      setTimeout(this.enemiesGenerated++, 5);
-      return;
+      this.enemies.push(new Enemy(this, "bossOne"));
+      this.canGenerate = false;
+      setTimeout(function () {
+        that.enemiesGenerated++;
+        that.canGenerate = true}, 5000)
+      return      
+    } else if (enemiesGenerated > 12 && enemiesGenerated <= 15) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[4]));
+    } else if (enemiesGenerated > 15 && enemiesGenerated <= 18) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[5]));
+    } else if (enemiesGenerated > 18 && enemiesGenerated <= 21) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[6]));
+    } else if (enemiesGenerated == 22) {
+      this.canGenerate = false;
+      this.enemies.push(new Enemy(this, "bossTwo"));
+      setTimeout(function () {
+        that.enemiesGenerated++;
+        that.canGenerate = true}, 5000)
+      return     
+    } else {
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]))
     }
     this.enemiesGenerated++;
   } else {
@@ -152,7 +186,6 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
   if (this.framesCounter % 100 == 0) {
-    console.log("Hola")
     this.enemies.forEach(function(e) {
       e.shoot();
     });
@@ -208,11 +241,11 @@ Game.prototype.enemyShoot = function() {
             e.enemyProjectiles.splice(indexEp, 1);
           }
           if (that.player.health <= 0) {
-            that.gameOver();
+            //that.gameOver();
           }
         }
       });
-    });
+    }.bind(this));
   };
 
   // Comprobar si se ha cogido objeto
@@ -229,7 +262,7 @@ Game.prototype.enemyShoot = function() {
         if (indexI > -1) {
           that.items.splice(indexI, 1);
           that.score += 100;
-          if (i.itemType == 2) {
+          if (i.itemType == "weapon" && that.player.playerLevel < 3) {
             that.player.playerLevel++;
           }
         }

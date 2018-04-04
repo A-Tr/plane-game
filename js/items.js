@@ -11,7 +11,7 @@ function Item(game, itemType) {
   this.img = new Image();
   this.img.src = ("images/item_1.png")
 
-  if (this.itemType == 2) {
+  if (this.itemType == "weapon") {
     this.img.src = ("images/item_2.png")
   }
 }

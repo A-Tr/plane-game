@@ -60,7 +60,8 @@ Player.prototype.setListeners = function() {
       this.moveLeft = false;
     } else if (e.keyCode == 39) {
       this.moveRight = false;
-    } else if (e.keyCode === 32) {
+    } 
+    else if (e.keyCode === 32) {
       this.shoot();
     }
   }.bind(this);
