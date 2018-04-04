@@ -1,6 +1,6 @@
 function Projectile(game, bulletType, whoShoots, x, y) {
-  this.width = 15;
-  this.height = 30;
+  this.width = 10;
+  this.height = 20;
   this.game = game;
 
   this.img = new Image();
@@ -15,21 +15,23 @@ function Projectile(game, bulletType, whoShoots, x, y) {
     this.y = this.game.player.y - this.height;
 
     if (this.bulletType == 2) {
-      this.x -= 25;
+      this.x -= 15;
+      this.damage = 0.75;
     } else if (this.bulletType == 3) {
-      this.x += 25;
+      this.x += 15;
+      this.damage = 0.75;
     }
     this.vy = -10;
-    
+
   } else if (whoShoots === "enemy") {
     this.img.src = "images/enemy_missile.png";
 
     this.x = x;
 
     if (this.bulletType == 2) {
-      this.x -= 25;
+      this.x -= 40;
     } else if (this.bulletType == 3) {
-      this.x += 25;
+      this.x += 40;
     }
 
     this.y = y;

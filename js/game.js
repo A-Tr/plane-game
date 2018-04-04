@@ -15,6 +15,14 @@ function Game(canvas) {
   this.canGenerate = true;
 
   this.explosionSound = new Audio("sounds/explosion_one.ogg");
+
+  // Dibujo del fondo inicial
+  var grd = this.ctx.createLinearGradient(0,0,this.canvas.width,this.canvas.height);
+    grd.addColorStop(0,"#660066");
+    grd.addColorStop(1,"#000000");
+
+  this.ctx.fillStyle = grd;
+  this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
 }
 
 // Empezar el juego
@@ -174,20 +182,21 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
       this.enemies.push(new Enemy(this, this.enemyTypes[5]));
     } else if (enemiesGenerated > 18 && enemiesGenerated <= 21) {
       this.enemies.push(new Enemy(this, this.enemyTypes[6]));
-    } else if (enemiesGenerated == 22) {
+    } else if (enemiesGenerated > 21 && enemiesGenerated <= 24) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[7]));
+    } else if (enemiesGenerated == 25) {
       this.canGenerate = false;
       this.enemies.push(new Enemy(this, "bossTwo"));
       setTimeout(function () {
         that.enemiesGenerated++;
         that.canGenerate = true}, 5000)
       return     
-    } else {
-      this.enemies.push(new Enemy(this, this.enemyTypes[8]))
     }
     this.enemiesGenerated++;
-  } else {
-    return;
-  }
+  } else if (framesCounter % 50 == 0 && that.enemiesGenerated >= 26) {
+    this.enemies.push(new Enemy(this, this.enemyTypes[8]))
+    this.enemies.push(new Enemy(this, this.enemyTypes[8]))
+  } else {return}
 };
 
 //Disparo enemigo

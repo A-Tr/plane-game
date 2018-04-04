@@ -27,7 +27,13 @@ Background.prototype.draw = function() {
 };
 
 Background.prototype.move = function() {
-  this.y += this.dy;
+  if (this.game.enemiesGenerated > 12 && this.game.enemiesGenerated <= 25){
+    this.y += this.dy * 1.33;
+  } else  if (this.game.enemiesGenerated > 26){
+    this.y += this.dy * 1.66;
+  } else {
+    this.y += this.dy
+  }
 
   if (this.y >= this.game.canvas.height) this.y = 0;
 };
