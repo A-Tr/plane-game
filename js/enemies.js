@@ -97,7 +97,7 @@ function Enemy(game, enemyType) {
     this.x = 140;
     this.width = 120;
     this.height = 150;
-    this.health = 30;
+    this.health = 60;
     this.img.src = "images/boss_two.png";
   } 
   

@@ -25,16 +25,12 @@ button {
   font-family: 'Orbitron', sans-serif;
   border-radius: 10px;
   background-color: darkmagenta;
-  margin: 50px 50px;
+  margin: 65px 50px;
   text-align: center;
   vertical-align: middle;
   color: #00ffff;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-}
-
-#restart-btn {
-  font-size: 24px;
 }
 
 img {

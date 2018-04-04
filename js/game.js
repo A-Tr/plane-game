@@ -68,20 +68,22 @@ Game.prototype.start = function() {
 
 // Resetear juego
 Game.prototype.reset = function() {
-  this.gameOn = false;
-  var that = this;
-  clearInterval(this.interval);
-  this.clear();
-  this.background = new Background(this);
-  this.player = new Player(this);
-  this.enemies = [];
-  this.framesCounter = 0;
-  this.enemiesGenerated = 0;
+      var that = this;
+      clearInterval(this.interval);
+      this.clear();
+      this.background = new Background(this);
+      this.player = new Player(this);
+      this.enemies = [];
+      this.enemiesGenerated = 0;
+      this.framesCounter = 0;
+      this.items = [];
+      this.score = 0;  
 };
 
 // GAME OVER
 Game.prototype.gameOver = function() {
   this.clear();
+  this.gameOn = false;  
   var grd = this.ctx.createLinearGradient(0,0,this.canvas.width,this.canvas.height);
     grd.addColorStop(0,"#660066");
     grd.addColorStop(1,"#000000");
@@ -93,6 +95,7 @@ Game.prototype.gameOver = function() {
   this.ctx.fillText("YOU'RE DEAD", 30, 300);
   this.ctx.font = "bold 26px Orbitron";
   this.ctx.fillText("Please press RESTART", 30, 360);
+  this.ctx.fillText("YOUR SCORE: " + this.score, 30, 420);
   clearInterval(this.interval);
 };
 
