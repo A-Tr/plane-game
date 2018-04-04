@@ -8,21 +8,37 @@ function Game(canvas) {
   this.enemiesGenerated = 0;
   this.items = [];
   this.score = 0;
+  this.highScore = 0;
   this.playerHealth = document.getElementById("player-health");
 
-  this.enemyTypes = ["typeOne", "typeTwo", "typeThree", "typeFour", "typeFive", "typeSix", "typeSeven", "typeEight", "randomEnemy"]
+  this.enemyTypes = [
+    "typeOne",
+    "typeTwo",
+    "typeThree",
+    "typeFour",
+    "typeFive",
+    "typeSix",
+    "typeSeven",
+    "typeEight",
+    "randomEnemy"
+  ];
 
   this.canGenerate = true;
 
   this.explosionSound = new Audio("sounds/explosion_one.ogg");
 
   // Dibujo del fondo inicial
-  var grd = this.ctx.createLinearGradient(0,0,this.canvas.width,this.canvas.height);
-    grd.addColorStop(0,"#660066");
-    grd.addColorStop(1,"#000000");
+  var grd = this.ctx.createLinearGradient(
+    0,
+    0,
+    this.canvas.width,
+    this.canvas.height
+  );
+  grd.addColorStop(0, "#660066");
+  grd.addColorStop(1, "#000000");
 
   this.ctx.fillStyle = grd;
-  this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 
 // Empezar el juego
@@ -35,9 +51,9 @@ Game.prototype.start = function() {
         return i.y > 0;
       });
       this.clear();
-      
+
       if (this.player.health <= 0) {
-        this.gameOver()
+        this.gameOver();
         return;
       }
 
@@ -45,16 +61,16 @@ Game.prototype.start = function() {
         this.generateEnemy(this.framesCounter, this.enemiesGenerated);
       }
       this.generateItem();
-      
+
       this.enemyShoot();
-      
+
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
-      
+
       this.move();
       this.draw();
-      
+
       this.framesCounter += 1;
 
       if (this.framesCounter >= 10000) {
@@ -68,34 +84,47 @@ Game.prototype.start = function() {
 
 // Resetear juego
 Game.prototype.reset = function() {
-      var that = this;
-      clearInterval(this.interval);
-      this.clear();
-      this.background = new Background(this);
-      this.player = new Player(this);
-      this.enemies = [];
-      this.enemiesGenerated = 0;
-      this.framesCounter = 0;
-      this.items = [];
-      this.score = 0;  
+  var that = this;
+  clearInterval(this.interval);
+  this.clear();
+  this.background = new Background(this);
+  this.player = new Player(this);
+  this.enemies = [];
+  this.enemiesGenerated = 0;
+  this.framesCounter = 0;
+  this.items = [];
+  this.score = 0;
 };
 
 // GAME OVER
 Game.prototype.gameOver = function() {
   this.clear();
-  this.gameOn = false;  
-  var grd = this.ctx.createLinearGradient(0,0,this.canvas.width,this.canvas.height);
-    grd.addColorStop(0,"#660066");
-    grd.addColorStop(1,"#000000");
+  var that = this;
+  if (this.score > this.highScore) {
+    this.highScore = this.score;
+  }
+  setTimeout(function() {
+    that.gameOn = false;
+  }, 1000);
+
+  var grd = this.ctx.createLinearGradient(
+    0,
+    0,
+    this.canvas.width,
+    this.canvas.height
+  );
+  grd.addColorStop(0, "#660066");
+  grd.addColorStop(1, "#000000");
 
   this.ctx.fillStyle = grd;
-  this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
-  this.ctx.fillStyle = "#00ffff"
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  this.ctx.fillStyle = "#00ffff";
   this.ctx.font = "bold 42px Orbitron";
   this.ctx.fillText("YOU'RE DEAD", 30, 300);
   this.ctx.font = "bold 26px Orbitron";
-  this.ctx.fillText("Please press RESTART", 30, 360);
-  this.ctx.fillText("YOUR SCORE: " + this.score, 30, 420);
+  this.ctx.fillText("Please press RESTART", 30, 330);
+  this.ctx.fillText("YOUR SCORE: " + this.score, 30, 390);
+  this.ctx.fillText("HIGH SCORE: " + this.highScore, 30, 470);
   clearInterval(this.interval);
 };
 
@@ -162,7 +191,7 @@ Game.prototype.generateItem = function() {
 
 // Generar enemigos
 Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
-  var that = this
+  var that = this;
   if (framesCounter % 100 == 0) {
     if (enemiesGenerated <= 2) {
       this.enemies.push(new Enemy(this, this.enemyTypes[0]));
@@ -175,10 +204,11 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
     } else if (enemiesGenerated == 12) {
       this.enemies.push(new Enemy(this, "bossOne"));
       this.canGenerate = false;
-      setTimeout(function () {
+      setTimeout(function() {
         that.enemiesGenerated++;
-        that.canGenerate = true}, 5000)
-      return      
+        that.canGenerate = true;
+      }, 5000);
+      return;
     } else if (enemiesGenerated > 12 && enemiesGenerated <= 15) {
       this.enemies.push(new Enemy(this, this.enemyTypes[4]));
     } else if (enemiesGenerated > 15 && enemiesGenerated <= 18) {
@@ -190,16 +220,24 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
     } else if (enemiesGenerated == 25) {
       this.canGenerate = false;
       this.enemies.push(new Enemy(this, "bossTwo"));
-      setTimeout(function () {
+      setTimeout(function() {
         that.enemiesGenerated++;
-        that.canGenerate = true}, 5000)
-      return     
+        that.canGenerate = true;
+      }, 7000);
+      return;
+    } else if (enemiesGenerated >= 26 && enemiesGenerated < 40) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]));
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]));
+    } else if (enemiesGenerated == 40) {
+      this.enemies.push(new Enemy(this, "bossTwo"));
+      this.enemies.push(new Enemy(this, "bossTwoA"));
+    } else if (enemiesGenerated > 40) {
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]));
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]));
+      this.enemies.push(new Enemy(this, this.enemyTypes[8]));
     }
     this.enemiesGenerated++;
-  } else if (framesCounter % 50 == 0 && that.enemiesGenerated >= 26) {
-    this.enemies.push(new Enemy(this, this.enemyTypes[8]))
-    this.enemies.push(new Enemy(this, this.enemyTypes[8]))
-  } else {return}
+  }
 };
 
 //Disparo enemigo
@@ -230,9 +268,7 @@ Game.prototype.enemyShoot = function() {
               e.destroyed();
               that.explosionSound.play();
               that.score += 5;
-              setTimeout(function() {
-                that.enemies.splice(indexE, 1);
-              }, 100);
+              that.enemies.splice(indexE, 1);
             }
           }
         }
@@ -243,28 +279,29 @@ Game.prototype.enemyShoot = function() {
   // Comprobar daño al jugador
   Game.prototype.checkPlayerDamage = function() {
     var that = this;
-    this.enemies.forEach(function(e) {
-      e.enemyProjectiles.forEach(function(ep) {
-        if (
-          ep.x < that.player.x + that.player.width &&
-          ep.x + ep.width > that.player.x &&
-          ep.y < that.player.y + that.player.height &&
-          ep.y + ep.height > that.player.y
-        ) {
-          var indexEp = e.enemyProjectiles.indexOf(ep);
-          if (indexEp > -1) {
-            that.player.health -= 1;
-            if (that.player.playerLevel > 1) {
-              that.player.playerLevel -= 1;
+    this.enemies.forEach(
+      function(e) {
+        e.enemyProjectiles.forEach(function(ep) {
+          if (
+            ep.x < that.player.x + that.player.width &&
+            ep.x + ep.width > that.player.x &&
+            ep.y < that.player.y + that.player.height &&
+            ep.y + ep.height > that.player.y
+          ) {
+            var indexEp = e.enemyProjectiles.indexOf(ep);
+            if (indexEp > -1) {
+              that.player.health -= 1;
+              if (that.player.playerLevel > 1) {
+                that.player.playerLevel -= 1;
+              }
+              e.enemyProjectiles.splice(indexEp, 1);
             }
-            e.enemyProjectiles.splice(indexEp, 1);
+            if (that.player.health <= 0) {
+            }
           }
-          if (that.player.health <= 0) {
-            //that.gameOver();
-          }
-        }
-      });
-    }.bind(this));
+        });
+      }.bind(this)
+    );
   };
 
   // Comprobar si se ha cogido objeto

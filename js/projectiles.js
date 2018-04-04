@@ -1,6 +1,6 @@
 function Projectile(game, bulletType, whoShoots, x, y) {
-  this.width = 12;
-  this.height = 24;
+  this.width = 15;
+  this.height = 30;
   this.game = game;
 
   this.img = new Image();
@@ -36,7 +36,7 @@ function Projectile(game, bulletType, whoShoots, x, y) {
 
     this.y = y;
 
-    this.vy = 5;
+    this.vy = 7;
   }
 }
 
