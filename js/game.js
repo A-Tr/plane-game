@@ -74,10 +74,17 @@ Game.prototype.reset = function() {
 // GAME OVER
 Game.prototype.gameOver = function() {
   this.clear();
-  this.ctx.fillStyle = "red";
-  this.ctx.fillRect(0, 0, 400, 800);
-  this.ctx.fillStyle = "green";
-  this.ctx.fillText("HAS MUELTO", 150, 390);
+  var grd = this.ctx.createLinearGradient(0,0,this.canvas.width,this.canvas.height);
+    grd.addColorStop(0,"#660066");
+    grd.addColorStop(1,"#000000");
+
+  this.ctx.fillStyle = grd;
+  this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+  this.ctx.fillStyle = "#00ffff"
+  this.ctx.font = "bold 42px Orbitron";
+  this.ctx.fillText("YOU'RE DEAD", 30, 300);
+  this.ctx.font = "bold 26px Orbitron";
+  this.ctx.fillText("Please press RESTART", 30, 360);
   clearInterval(this.interval);
 };
 
