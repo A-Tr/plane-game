@@ -82,14 +82,14 @@ Player.prototype.move = function() {
 
 Player.prototype.shoot = function() {
   if (this.playerLevel == 1) {
-    this.projectiles.push(new Projectile(this.game, this.playerLevel));
+    this.projectiles.push(new Projectile(this.game, 1, "player"));
   } else if (this.playerLevel == 2) {
-    this.projectiles.push(new Projectile(this.game, 1));
-    this.projectiles.push(new Projectile(this.game, 2));
+    this.projectiles.push(new Projectile(this.game, 2, "player"));
+    this.projectiles.push(new Projectile(this.game, 3, "player"));
   } else if (this.playerLevel >= 3) {
-    this.projectiles.push(new Projectile(this.game, 1));
-    this.projectiles.push(new Projectile(this.game, 2));
-    this.projectiles.push(new Projectile(this.game, 3));
+    this.projectiles.push(new Projectile(this.game, 1, "player"));
+    this.projectiles.push(new Projectile(this.game, 2, "player"));
+    this.projectiles.push(new Projectile(this.game, 3, "player"));
   }
   this.shootSound.play();
 };

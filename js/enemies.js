@@ -27,28 +27,28 @@ function Enemy(game, enemyType) {
   });
 
   //Tipos de enemigos
-  if (enemyType === 1 && this.isDestroyed === false) {
-    this.vx = 5;
+  if (enemyType === 1 && !this.isDestroyed) {
+    this.vx = 3;
   }
 
-  if (enemyType === 2 && this.isDestroyed === false) {
-    this.vx = -5;
+  if (enemyType === 2 && !this.isDestroyed) {
+    this.vx = -3;
     this.x = 400 - this.width;
   }
 
-  if (enemyType === 3 && this.isDestroyed === false) {
+  if (enemyType === 3 && !this.isDestroyed) {
     this.vx = 0;
     this.vy = 1.5;
     this.x = 0;
   }
 
-  if (enemyType === 4 && this.isDestroyed === false) {
+  if (enemyType === 4 && !this.isDestroyed) {
     this.vx = 0;
     this.vy = 1.5;
     this.x = this.game.canvas.width - this.width;
   }
 
-  if (enemyType === 5 && this.isDestroyed === false) {
+  if (enemyType === 5 && !this.isDestroyed) {
     this.vx = 2;
     this.vy = 0;
     this.x = 50;
@@ -97,6 +97,9 @@ Enemy.prototype.move = function() {
     this.x = 1;
     this.vx = this.vx * -1;
   } else if (this.y >= 500) {
+    this.y = 499;
+    this.vx = 3;
+    this.x += this.vx;
     this.vy = 0;
   } else {
     this.x += this.vx;
@@ -107,17 +110,17 @@ Enemy.prototype.move = function() {
 Enemy.prototype.shoot = function() {
   if (this.enemyType <= 4)
     this.enemyProjectiles.push(
-      new EnemyProjectile(this.game, this.x + this.width / 2, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
     );
   else if (this.enemyType == 5) {
     this.enemyProjectiles.push(
-      new EnemyProjectile(this.game, this.x + this.width / 2, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
     );
     this.enemyProjectiles.push(
-      new EnemyProjectile(this.game, this.x + this.width / 4, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width / 4, this.y)
     );
     this.enemyProjectiles.push(
-      new EnemyProjectile(this.game, this.x + this.width * 3 / 4, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width * 3 / 4, this.y)
     );
   }
 };

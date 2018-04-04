@@ -12,6 +12,7 @@ function Game(canvas) {
   this.explosionSound = new Audio("sounds/explosion_one.ogg");
 }
 
+// Empezar el juego
 Game.prototype.start = function() {
   this.reset();
   var that = this;
@@ -22,7 +23,7 @@ Game.prototype.start = function() {
       });
       this.clear();
 
-      this.generateEnemy();
+      this.generateEnemy(this.framesCounter, this.enemiesGenerated);
       this.generateItem();
 
       this.enemyShoot();
@@ -46,10 +47,7 @@ Game.prototype.start = function() {
   this.gameOn = true;
 };
 
-Game.prototype.clear = function() {
-  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-};
-
+// Resetear juego
 Game.prototype.reset = function() {
   this.gameOn = false;
   var that = this;
@@ -62,12 +60,30 @@ Game.prototype.reset = function() {
   this.enemiesGenerated = 0;
 };
 
+// GAME OVER
 Game.prototype.gameOver = function() {
   clearInterval(this.interval);
   alert("game over");
 };
 
-// Dibujar objetos
+// Limpiar pantalla
+Game.prototype.clear = function() {
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+};
+
+// Dibujar puntuacion
+Game.prototype.scoreDraw = function() {
+  (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#596cea");
+  this.ctx.fillText("Score: " + this.score, 30, 750);
+};
+
+// Dibujar vidas
+Game.prototype.healthDraw = function() {
+  this.ctx.fillStyle = "#dc1054";
+  this.ctx.fillText("Lives: " + this.player.health, 250, 750);
+};
+
+// Dibujar elementos
 Game.prototype.draw = function() {
   this.background.draw();
   this.scoreDraw();
@@ -84,19 +100,7 @@ Game.prototype.draw = function() {
   this.player.draw();
 };
 
-// Dibujar puntuacion
-Game.prototype.scoreDraw = function() {
-  (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#596cea");
-  this.ctx.fillText("Score: " + this.score, 30, 750);
-};
-
-// Dibujar vidas
-Game.prototype.healthDraw = function() {
-  this.ctx.fillStyle = "#dc1054";
-  this.ctx.fillText("Lives: " + this.player.health, 250, 750);
-};
-
-//Mover objetos
+// Mover elementos
 Game.prototype.move = function() {
   this.background.move();
   this.enemies.forEach(function(e) {
@@ -114,7 +118,7 @@ Game.prototype.move = function() {
   });
 };
 
-//Generar objetos
+// Generar objetos
 Game.prototype.generateItem = function() {
   if (this.framesCounter % 300 == 0) {
     this.items.push(new Item(this, 1));
@@ -123,53 +127,37 @@ Game.prototype.generateItem = function() {
   }
 };
 
-//Generar enemigos
-
-Game.prototype.generateEnemy = function() {
-  if (this.framesCounter % 100 == 0 && this.enemiesGenerated <= 2) {
-    this.enemies.push(new Enemy(this, 1));
+// Generar enemigos
+Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
+  if (framesCounter % 100 == 0) {
+    if (enemiesGenerated <= 2) {
+      this.enemies.push(new Enemy(this, 1));
+    } else if (enemiesGenerated > 2 && enemiesGenerated <= 5) {
+      this.enemies.push(new Enemy(this, 2));
+    } else if (enemiesGenerated > 5 && enemiesGenerated <= 8) {
+      this.enemies.push(new Enemy(this, 3));
+    } else if (enemiesGenerated > 8 && enemiesGenerated <= 11) {
+      this.enemies.push(new Enemy(this, 4));
+    } else if (enemiesGenerated == 12) {
+      this.enemies.push(new Enemy(this, 5));
+      setTimeout(this.enemiesGenerated++, 5);
+      return;
+    }
     this.enemiesGenerated++;
-  } else if (
-    this.framesCounter % 100 == 0 &&
-    this.enemiesGenerated > 2 &&
-    this.enemiesGenerated <= 5
-  ) {
-    this.enemies.push(new Enemy(this, 2));
-    this.enemiesGenerated++;
-  } else if (
-    this.framesCounter % 100 == 0 &&
-    this.enemiesGenerated > 5 &&
-    this.enemiesGenerated <= 8
-  ) {
-    this.enemies.push(new Enemy(this, 3));
-    this.enemiesGenerated++;
-  } else if (
-    this.framesCounter % 100 == 0 &&
-    this.enemiesGenerated > 8 &&
-    this.enemiesGenerated <= 11
-  ) {
-    this.enemies.push(new Enemy(this, 4));
-    this.enemiesGenerated++;
-  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated == 12) {
-    this.enemies.push(new Enemy(this, 5));
-    setTimeout(this.enemiesGenerated++, 5);
-    console.log(this.enemiesGenerated);
-  } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 12) {
-    var randomizer = Math.floor(Math.random() * 5);
-    this.enemies.push(new Enemy(this, Math.floor(Math.random() * 5)));
-    this.enemiesGenerated++;
+  } else {
+    return;
   }
 };
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 100 == 0) {
+  if (this.framesCounter % 150 == 0) {
     this.enemies.forEach(function(e) {
       e.shoot();
     });
   }
 
-  //Comprobar colisiones
+  //Comprobar daño enemigo
   Game.prototype.checkEnemyDamage = function() {
     var that = this;
     this.player.projectiles.forEach(function(p) {
@@ -199,6 +187,7 @@ Game.prototype.enemyShoot = function() {
     });
   };
 
+  // Comprobar daño al jugador
   Game.prototype.checkPlayerDamage = function() {
     var that = this;
     this.enemies.forEach(function(e) {
@@ -225,6 +214,7 @@ Game.prototype.enemyShoot = function() {
     });
   };
 
+  // Comprobar si se ha cogido objeto
   Game.prototype.checkItem = function() {
     var that = this;
     this.items.forEach(function(i) {
