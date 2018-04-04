@@ -19,8 +19,8 @@ function Projectile(game, bulletType, whoShoots, x, y) {
     } else if (this.bulletType == 3) {
       this.x += 25;
     }
-
     this.vy = -10;
+    
   } else if (whoShoots === "enemy") {
     this.img.src = "images/enemy_missile.png";
 

@@ -22,20 +22,20 @@ Game.prototype.start = function() {
         return i.y > 0;
       });
       this.clear();
-
+      
+      
       this.generateEnemy(this.framesCounter, this.enemiesGenerated);
       this.generateItem();
-
+      
       this.enemyShoot();
-
+      
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
-
+      
       this.move();
-
       this.draw();
-
+      
       this.framesCounter += 1;
 
       if (this.framesCounter >= 10000) {
@@ -131,15 +131,15 @@ Game.prototype.generateItem = function() {
 Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
   if (framesCounter % 100 == 0) {
     if (enemiesGenerated <= 2) {
-      this.enemies.push(new Enemy(this, 1));
+      this.enemies.push(new Enemy(this, "typeOne"));
     } else if (enemiesGenerated > 2 && enemiesGenerated <= 5) {
-      this.enemies.push(new Enemy(this, 2));
+      this.enemies.push(new Enemy(this, "typeTwo"));
     } else if (enemiesGenerated > 5 && enemiesGenerated <= 8) {
-      this.enemies.push(new Enemy(this, 3));
+      this.enemies.push(new Enemy(this, "typeThree"));
     } else if (enemiesGenerated > 8 && enemiesGenerated <= 11) {
-      this.enemies.push(new Enemy(this, 4));
+      this.enemies.push(new Enemy(this, "typeFour"));
     } else if (enemiesGenerated == 12) {
-      this.enemies.push(new Enemy(this, 5));
+      this.enemies.push(new Enemy(this, "boss"));
       setTimeout(this.enemiesGenerated++, 5);
       return;
     }
@@ -151,7 +151,8 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 150 == 0) {
+  if (this.framesCounter % 100 == 0) {
+    console.log("Hola")
     this.enemies.forEach(function(e) {
       e.shoot();
     });
