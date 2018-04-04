@@ -228,9 +228,14 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
     } else if (enemiesGenerated >= 26 && enemiesGenerated < 40) {
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
-    } else if (enemiesGenerated == 40) {
+    } else if (enemiesGenerated == 40) {      
+      this.canGenerate = false;
       this.enemies.push(new Enemy(this, "bossTwo"));
       this.enemies.push(new Enemy(this, "bossTwoA"));
+      setTimeout(function() {
+        that.enemiesGenerated++;
+        that.canGenerate = true;
+      }, 7000);
     } else if (enemiesGenerated > 40) {
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
@@ -242,7 +247,7 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 100 == 0) {
+  if (this.framesCounter % 80 == 0) {
     this.enemies.forEach(function(e) {
       e.shoot();
     });

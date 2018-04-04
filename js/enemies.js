@@ -92,7 +92,7 @@ function Enemy(game, enemyType) {
   }
 
   if (enemyType === "bossTwo"  && !this.isDestroyed) {
-    this.vx = 12;
+    this.vx = 10;
     this.vy = 0.5;
     this.x = 140;
     this.width = 120;
@@ -101,7 +101,7 @@ function Enemy(game, enemyType) {
     this.img.src = "images/boss_two.png";
   } 
   if (enemyType === "bossTwoA" && !this.isDestroyed) {
-    this.vx = -12;
+    this.vx = -1;
     this.vy = 0.5;
     this.x = 280;
     this.width = 120;
@@ -179,13 +179,10 @@ Enemy.prototype.shoot = function() {
     );
   } else if (this.enemyType == "bossTwo" || this.enemyType == "bossTwoA") {
     this.enemyProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width / 3, this.y)
     );
     this.enemyProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 4, this.y)
-    );
-    this.enemyProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width * 3 / 4, this.y)
+      new Projectile(this.game, 1, "enemy", this.x + this.width * 2 / 3, this.y)
     );
     } else {
     this.enemyProjectiles.push(
