@@ -90,7 +90,6 @@ Player.prototype.shoot = function() {
     this.projectiles.push(new Projectile(this.game, 1));
     this.projectiles.push(new Projectile(this.game, 2));
     this.projectiles.push(new Projectile(this.game, 3));
-    this.projectiles.push(new Projectile(this.game, 4));
   }
   this.shootSound.play();
 };

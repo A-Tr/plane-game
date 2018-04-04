@@ -8,18 +8,27 @@ function Item(game, itemType) {
   this.itemType = itemType
   
   this.x = this.width + Math.floor(Math.random() * 400 - this.width);
+  this.img = new Image();
+  this.img.src = ("images/item_1.png")
+
+  if (this.itemType == 2) {
+    this.img.src = ("images/item_2.png")
+  }
 }
 
 
   Item.prototype.draw = function () {
-    if (this.itemType == 1) {
-      this.game.ctx.fillStyle = "red";
-    } else if (this.itemType == 2) {
-      this.game.ctx.fillStyle = "blue";
-    } else if (this.itemType == 3) {
-      this.game.ctx.fillStyle = "green";
-    }
-    this.game.ctx.fillRect(this.x, this.y, this.width, this.height)
+    this.game.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
     }
 
 Item.prototype.move = function () {

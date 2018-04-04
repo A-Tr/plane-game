@@ -9,7 +9,7 @@ function Game(canvas) {
   this.score = 0;
   this.playerHealth = document.getElementById("player-health");
 
-  this.explosionSound = new Audio("sounds/explosion_one.ogg")
+  this.explosionSound = new Audio("sounds/explosion_one.ogg");
 }
 
 Game.prototype.start = function() {
@@ -62,10 +62,10 @@ Game.prototype.reset = function() {
   this.enemiesGenerated = 0;
 };
 
-Game.prototype.gameOver = function () {
+Game.prototype.gameOver = function() {
   clearInterval(this.interval);
-  alert("game over")
-}
+  alert("game over");
+};
 
 // Dibujar objetos
 Game.prototype.draw = function() {
@@ -85,17 +85,16 @@ Game.prototype.draw = function() {
 };
 
 // Dibujar puntuacion
-Game.prototype.scoreDraw = function () {
-  this.ctx.font = "bold 24px Orbitron",
-  this.ctx.fillStyle = "#596cea"
+Game.prototype.scoreDraw = function() {
+  (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#596cea");
   this.ctx.fillText("Score: " + this.score, 30, 750);
-}
+};
 
 // Dibujar vidas
-Game.prototype.healthDraw = function () {
-  this.ctx.fillStyle = "#dc1054"
+Game.prototype.healthDraw = function() {
+  this.ctx.fillStyle = "#dc1054";
   this.ctx.fillText("Lives: " + this.player.health, 250, 750);
-}
+};
 
 //Mover objetos
 Game.prototype.move = function() {
@@ -119,7 +118,7 @@ Game.prototype.move = function() {
 Game.prototype.generateItem = function() {
   if (this.framesCounter % 300 == 0) {
     this.items.push(new Item(this, 1));
-  } else if (this.framesCounter % 1000 == 0){
+  } else if (this.framesCounter % 1000 == 0) {
     this.items.push(new Item(this, 2));
   }
 };
@@ -153,11 +152,11 @@ Game.prototype.generateEnemy = function() {
     this.enemiesGenerated++;
   } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated == 12) {
     this.enemies.push(new Enemy(this, 5));
-    this.enemiesGenerated++;
-    console.log(this.enemiesGenerated)
+    setTimeout(this.enemiesGenerated++, 5);
+    console.log(this.enemiesGenerated);
   } else if (this.framesCounter % 100 == 0 && this.enemiesGenerated > 12) {
-    var randomizer = Math.floor(Math.random() * 5)
-    this.enemies.push(new Enemy(this, Math.floor(Math.random() * 5)))
+    var randomizer = Math.floor(Math.random() * 5);
+    this.enemies.push(new Enemy(this, Math.floor(Math.random() * 5)));
     this.enemiesGenerated++;
   }
 };
@@ -187,9 +186,12 @@ Game.prototype.enemyShoot = function() {
           if (indexE > -1) {
             that.player.projectiles.splice(indexP, 1);
             if (e.health <= 0) {
-              that.enemies.splice(indexE, 1);
-              that.explosionSound.play()
+              e.destroyed();
+              that.explosionSound.play();
               that.score += 5;
+              setTimeout(function() {
+                that.enemies.splice(indexE, 1);
+              }, 100);
             }
           }
         }
@@ -210,11 +212,13 @@ Game.prototype.enemyShoot = function() {
           var indexEp = e.enemyProjectiles.indexOf(ep);
           if (indexEp > -1) {
             that.player.health -= 1;
+            if (that.player.playerLevel > 1) {
+              that.player.playerLevel -= 1;
+            }
             e.enemyProjectiles.splice(indexEp, 1);
-            console.log(that.player.health);
           }
           if (that.player.health <= 0) {
-            that.gameOver()
+            that.gameOver();
           }
         }
       });
@@ -235,7 +239,7 @@ Game.prototype.enemyShoot = function() {
           that.items.splice(indexI, 1);
           that.score += 100;
           if (i.itemType == 2) {
-            that.player.playerLevel ++;
+            that.player.playerLevel++;
           }
         }
       }

@@ -54,30 +54,6 @@ Projectile.prototype.draw = function () {
       this.width,
       this.height
     );
-  } else if (this.bulletType == 3){
-    this.game.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.img.width,
-      this.img.height,
-      this.x - 50,
-      this.y,
-      this.width,
-      this.height
-    );
-  } else if (this.bulletType == 4){
-    this.game.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.img.width,
-      this.img.height,
-      this.x + 50,
-      this.y,
-      this.width,
-      this.height
-    );
   }
 }
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <script type="text/javascript" src="js/items.js"></script>
   <script type="text/javascript" src="js/enemies.js"></script>
   <script type="text/javascript" src="js/player.js"></script>
+  <!-- <script type="text/javascript" src="js/score.js"></script> -->
 
 
 
@@ -21,21 +23,20 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <title>Document</title>
 </head>
+
 <body>
   <audio id="theme" src="sounds/theme.mp3" autoplay loop></audio>
   <div id="instructions">
-    <h2>VAPOR PLANES</h> 
-    <p>Eres el bueno, ve a por los malos y frieles a tiros</p>
-    <button id="start-btn">START GAME</button>
-    <button id="restart-btn">Restart</button>
-    
+    <h2>VAPOR PLANES</h>
+      <p>Eres el bueno, ve a por los malos y frieles a tiros</p>
+      <button id="start-btn">START GAME</button>
+      <button id="restart-btn">Restart</button>
+
   </div>
 
   <canvas id="canvas" width="400" height="800"></canvas>
 
-  <div id="scoreboard">
-    <h2>SCORE: <span id="score"></span></h2>
-  </div>
   <img src="images/controls.png">
 </body>
+
 </html>
