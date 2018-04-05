@@ -48,6 +48,50 @@ function Enemy(game, enemyType) {
     this.x = this.game.canvas.width - this.width;
   }
 
+  
+  if (enemyType === "typeFive" && !this.isDestroyed) {
+    this.vx = 8;
+    this.y = 200;
+    this.img.src = "images/enemy_two_sprite.png";
+    this.health = 3;
+  }
+  
+  if (enemyType === "typeSix" && !this.isDestroyed) {
+    this.vx = -8;
+    this.x = 400 - this.width;
+    this.y = 200;
+    this.img.src = "images/enemy_two_sprite.png";
+    this.health = 3;
+  }
+  
+  if (enemyType === "typeSeven" && !this.isDestroyed) {
+    this.vx = 0;
+    this.vy = 4;
+    this.x = 0;
+    this.y = 200;
+    this.img.src = "images/enemy_two_sprite.png";
+    this.health = 3;
+  }
+  
+  if (enemyType === "typeEight" && !this.isDestroyed) {
+    this.vx = 0;
+    this.vy = 4;
+    this.y = 200;
+    this.x = this.game.canvas.width - this.width;
+    this.img.src = "images/enemy_two_sprite.png";
+    this.health = 3;
+  }
+  
+  if (enemyType === "randomEnemy" && !this.isDestroyed) {
+    this.vx = Math.floor(Math.random() * 12) - 6;
+    this.vy = Math.floor(Math.random() * 5);
+    this.x = Math.floor(Math.random() * 400);
+    this.y = Math.floor(Math.random() * 200);
+    this.health = 3;
+    this.img.src = "images/enemy_two_sprite.png";
+  } 
+
+  // Jefes
   if (enemyType === "bossOne" && !this.isDestroyed) {
     this.vx = 2;
     this.vy = 0;
@@ -58,38 +102,6 @@ function Enemy(game, enemyType) {
     this.img.src = "images/boss.png";
   }
 
-  if (enemyType === "typeFive" && !this.isDestroyed) {
-    this.vx = 8;
-    this.y = 200;
-    this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
-  }
-
-  if (enemyType === "typeSix" && !this.isDestroyed) {
-    this.vx = -8;
-    this.x = 400 - this.width;
-    this.y = 200;
-    this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
-  }
-
-  if (enemyType === "typeSeven" && !this.isDestroyed) {
-    this.vx = 0;
-    this.vy = 4;
-    this.x = 0;
-    this.y = 200;
-    this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
-  }
-
-  if (enemyType === "typeEight" && !this.isDestroyed) {
-    this.vx = 0;
-    this.vy = 4;
-    this.y = 200;
-    this.x = this.game.canvas.width - this.width;
-    this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
-  }
 
   if (enemyType === "bossTwo"  && !this.isDestroyed) {
     this.vx = 10;
@@ -97,7 +109,7 @@ function Enemy(game, enemyType) {
     this.x = 140;
     this.width = 120;
     this.height = 150;
-    this.health = 50;
+    this.health = 40;
     this.img.src = "images/boss_two.png";
   } 
   if (enemyType === "bossTwoA" && !this.isDestroyed) {
@@ -106,18 +118,10 @@ function Enemy(game, enemyType) {
     this.x = 280;
     this.width = 120;
     this.height = 150;
-    this.health = 50;
+    this.health = 40;
     this.img.src = "images/boss_two.png";
   } 
   
-  if (enemyType === "randomEnemy" && !this.isDestroyed) {
-    this.vx = Math.floor(Math.random() * 12) - 6;
-    this.vy = Math.floor(Math.random() * 5);
-    this.x = Math.floor(Math.random() * 400);
-    this.y = Math.floor(Math.random() * 200);
-    this.health = 3;
-    this.img.src = "images/enemy_two_sprite.png";
-  } 
 }
 
 Enemy.prototype.draw = function() {
@@ -172,10 +176,10 @@ Enemy.prototype.shoot = function() {
       new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
     );
     this.enemyProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 5, this.y)
+      new Projectile(this.game, 2, "enemy", this.x + this.width / 2, this.y)
     );
     this.enemyProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width * 4 / 5, this.y)
+      new Projectile(this.game, 3, "enemy", this.x + this.width / 2, this.y)
     );
   } else if (this.enemyType == "bossTwo" || this.enemyType == "bossTwoA") {
     this.enemyProjectiles.push(

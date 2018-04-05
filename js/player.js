@@ -9,13 +9,13 @@ function Player(game) {
   this.moveLeft = false;
   this.moveRight = false;
 
-  this.width = 80;
+  this.width = 75;
   this.height = 100;
 
   this.health = 5;
   this.projectiles = [];
   this.item = []
-  this.playerLevel = 1;
+  this.playerLevel = 4;
 
   this.shootSound = new Audio("sounds/shoot.ogg")
 
@@ -87,10 +87,16 @@ Player.prototype.shoot = function() {
   } else if (this.playerLevel == 2) {
     this.projectiles.push(new Projectile(this.game, 2, "player"));
     this.projectiles.push(new Projectile(this.game, 3, "player"));
-  } else if (this.playerLevel >= 3) {
+  } else if (this.playerLevel == 3) {
     this.projectiles.push(new Projectile(this.game, 1, "player"));
     this.projectiles.push(new Projectile(this.game, 2, "player"));
     this.projectiles.push(new Projectile(this.game, 3, "player"));
+  } else if (this.playerLevel >= 4) {
+    this.projectiles.push(new Projectile(this.game, 1, "player"));
+    this.projectiles.push(new Projectile(this.game, 2, "player"));
+    this.projectiles.push(new Projectile(this.game, 3, "player"));
+    this.projectiles.push(new Projectile(this.game, 4, "player"));
+    this.projectiles.push(new Projectile(this.game, 5, "player"));
   }
   this.shootSound.play();
 };

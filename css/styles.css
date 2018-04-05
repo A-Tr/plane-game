@@ -1,6 +1,6 @@
 body {
   background-image: url("../images/page-bg.jpg");
-  background-size: contain;
+  background-size: cover;
   font-family: 'Orbitron', sans-serif;
   color: #00ffff;
   font-size: 20px

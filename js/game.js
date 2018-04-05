@@ -9,7 +9,7 @@ function Game(canvas) {
   this.items = [];
   this.score = 0;
   this.highScore = 0;
-  this.playerHealth = document.getElementById("player-health");
+  //this.playerHealth = document.getElementById("player-health");
 
   this.enemyTypes = [
     "typeOne",
@@ -60,14 +60,17 @@ Game.prototype.start = function() {
       if (this.canGenerate == true) {
         this.generateEnemy(this.framesCounter, this.enemiesGenerated);
       }
-      this.generateItem();
 
+      if (this.framesCounter % 200) {this.checkEnemiesDestroyed()}
+
+      this.generateItem();
+      if (this.framesCounter % 15 == 0) {this.player.shoot()}
       this.enemyShoot();
 
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
-
+      console.log(this.player.playerLevel)
       this.move();
       this.draw();
 
@@ -184,7 +187,7 @@ Game.prototype.move = function() {
 Game.prototype.generateItem = function() {
   if (this.framesCounter % 300 == 0) {
     this.items.push(new Item(this, "points"));
-  } else if (this.framesCounter % 400 == 0) {
+  } else if (this.framesCounter % 500 == 0) {
     this.items.push(new Item(this, "weapon"));
   }
 };
@@ -235,7 +238,7 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
       setTimeout(function() {
         that.enemiesGenerated++;
         that.canGenerate = true;
-      }, 7000);
+      }, 10000);
     } else if (enemiesGenerated > 40) {
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
@@ -244,6 +247,18 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
     this.enemiesGenerated++;
   }
 };
+
+//Eliminar enemigos
+Game.prototype.checkEnemiesDestroyed = function() {
+  this.enemies.forEach(function (e) {
+    var indexE = this.enemies.indexOf(e)
+    if (e.isDestroyed == true) {
+      this.enemies.splice(indexE, 1)
+    }
+  }.bind(this))
+}
+
+
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
@@ -273,7 +288,7 @@ Game.prototype.enemyShoot = function() {
               e.destroyed();
               that.explosionSound.play();
               that.score += 5;
-              that.enemies.splice(indexE, 1);
+              // that.enemies.splice(indexE, 1);
             }
           }
         }
@@ -323,7 +338,7 @@ Game.prototype.enemyShoot = function() {
         if (indexI > -1) {
           that.items.splice(indexI, 1);
           that.score += 100;
-          if (i.itemType == "weapon" && that.player.playerLevel < 3) {
+          if (i.itemType == "weapon") {
             that.player.playerLevel++;
           }
         }
