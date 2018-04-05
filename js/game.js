@@ -377,13 +377,17 @@ Game.prototype.enemyShoot = function() {
         e.y + e.height > that.player.y
       ) {
         var indexE = that.activeProjectiles.indexOf(e);
-        if (indexE > -1) {
+        if (indexE > -1 && that.player.isDamaged === false) {
           that.player.health -= 1;
           if (that.player.playerLevel > 1) {
             that.player.playerLevel -= 1;
           }
           that.activeProjectiles.splice(indexE, 1);
           that.sounds[5].play();
+          that.player.isDamaged = true;
+          setTimeout(function(){
+            that.player.isDamaged = false;
+          }, 2000)
         }
       }
     });
