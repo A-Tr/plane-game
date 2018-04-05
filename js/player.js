@@ -23,11 +23,26 @@ function Player(game) {
 
   this.img = new Image();
   this.img.src = "images/plane.png";
+
+  this.imgDamaged = new Image();
+  this.imgDamaged.src = "images/plane_damaged.png"
   this.setListeners();
 }
 
 Player.prototype.draw = function() {
-  this.game.ctx.drawImage(
+  if (this.isDamaged && this.game.framesCounter % 5 == 0){
+    this.game.ctx.drawImage(
+      this.imgDamaged,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    )
+  } else {this.game.ctx.drawImage(
     this.img,
     0,
     0,
@@ -37,7 +52,8 @@ Player.prototype.draw = function() {
     this.y,
     this.width,
     this.height
-  );
+  )};
+
 
   this.projectiles = this.projectiles.filter(function(p) {
     return p.y > 0;

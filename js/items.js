@@ -14,9 +14,11 @@ function Item(game, itemType) {
   if (this.itemType == "weapon") {
     this.img.src = ("images/item_2.png")
   } else if (this.itemType == "health") {
-    this.img.src = ("images/item_3.png")
+    this.img.src = ("images/item_3.png");
+    this.vy = 7
   } else if (this.itemType == "special") {
-    this.img.src = ("images/bomb.png")
+    this.img.src = ("images/bomb.png");
+    this.vy = 7
   }
 }
 

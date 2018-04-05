@@ -10,6 +10,12 @@ function Game(canvas) {
   this.score = 0;
   this.highScore = 0;
 
+  this.itemTypes = [
+    "health",
+    "special",
+    "weapon"
+  ]
+
   this.enemyTypes = [
     "typeOne",
     "typeTwo",
@@ -31,6 +37,7 @@ function Game(canvas) {
   this.levelUpSound = new Audio("sounds/level_up.ogg");
   this.specialSound = new Audio("sounds/get_spec.ogg");
   this.playerHitSound = new Audio("sounds/player_hit.ogg");
+  this.gameOverSound = new Audio("sounds/game_over.ogg");
 
   this.sounds = [
     this.explosionSound,
@@ -38,7 +45,8 @@ function Game(canvas) {
     this.healthSound,
     this.levelUpSound,
     this.specialSound,
-    this.playerHitSound
+    this.playerHitSound,
+    this.gameOverSound,
   ];
 
   // Dibujo del fondo inicial
@@ -121,6 +129,7 @@ Game.prototype.reset = function() {
 // GAME OVER
 Game.prototype.gameOver = function() {
   this.clear();
+  this.sounds[6].play()
   var that = this;
   if (this.score > this.highScore) {
     this.highScore = this.score;
@@ -251,16 +260,10 @@ Game.prototype.generateItem = function() {
   var that = this;
   if (this.framesCounter % 200 == 0) {
     this.items.push(new Item(this, "points"));
-  } else if (this.framesCounter % 350 == 0) {
-    this.items.push(new Item(this, "weapon"));
-    if (that.player.health < 5) {
-      this.items.push(new Item(this, "health"));
-    }
-  } else if (this.framesCounter % 500 == 0) {
-    if (that.player.specialCount < 3) {
-      this.items.push(new Item(this, "special"));
-    }
-  }
+  } else if (this.framesCounter % 300 == 0) {
+    this.items.push(new Item(this, this.itemTypes[Math.floor(Math.random() * 2)]));
+    this.items.push(new Item(this, this.itemTypes[2]))
+  } 
 };
 
 // Generar enemigos
@@ -411,7 +414,7 @@ Game.prototype.enemyShoot = function() {
           if (i.itemType == "weapon" && that.player.playerLevel < 5) {
             that.player.playerLevel++;
             that.sounds[3].play();
-          } else if (i.itemType == "health") {
+          } else if (i.itemType == "health" && that.player.health < 5) {
             that.player.health++;
             that.sounds[2].play();
             return;

@@ -59,7 +59,7 @@ function Projectile(game, bulletType, whoShoots, x, y) {
 
     this.y = y;
 
-    this.vy = 7;
+    this.vy = 10;
   }
 }
 
