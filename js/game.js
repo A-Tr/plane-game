@@ -145,7 +145,7 @@ Game.prototype.gameOver = function() {
   this.ctx.font = "bold 42px Orbitron";
   this.ctx.fillText("YOU'RE DEAD", 30, 300);
   this.ctx.font = "bold 26px Orbitron";
-  this.ctx.fillText("Please press RESTART", 30, 330);
+  this.ctx.fillText("Please press PLAY", 30, 330);
   this.ctx.fillText("YOUR SCORE: " + this.score, 30, 390);
   this.ctx.fillText("HIGH SCORE: " + this.highScore, 30, 470);
   clearInterval(this.interval);
@@ -158,7 +158,7 @@ Game.prototype.clear = function() {
 
 // Dibujar puntuacion
 Game.prototype.scoreDraw = function() {
-  (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#596cea");
+  (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#00ffff");
   this.ctx.fillText(this.score, 190, 790);
 };
 
