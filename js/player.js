@@ -2,7 +2,7 @@ function Player(game) {
   this.x = 160;
   this.y = 620;
   this.game = game;
-  
+
   this.vx = 1;
   this.ax = 5;
 
@@ -18,21 +18,26 @@ function Player(game) {
   this.playerLevel = 1;
   this.isDamaged = false;
 
-  this.shootSound = new Audio("sounds/shoot.ogg")
-  this.specialShootSound = new Audio("sounds/special_shoot.ogg")
+  this.shootSound = new Audio("sounds/shoot.ogg");
+  this.specialShootSound = new Audio("sounds/special_shoot.ogg");
 
   this.img = new Image();
-  this.img.src = "images/plane.png";
+  this.img.src = "images/planes/plane_level1.png";
 
-  this.imgDamaged = new Image();
-  this.imgDamaged.src = "images/plane_damaged.png"
+  this.imagesArray = [
+    "images/planes/plane_damaged.png",
+    "images/planes/plane_level1.png",
+    "images/planes/plane_level2.png",
+    "images/planes/plane_level3.png"
+  ];
+
   this.setListeners();
 }
 
-Player.prototype.draw = function() {
-  if (this.isDamaged && this.game.framesCounter % 5 == 0){
+Player.prototype.draw = function(level) {
+    this.img.src = this.imagesArray[level];
     this.game.ctx.drawImage(
-      this.imgDamaged,
+      this.img,
       0,
       0,
       this.img.width,
@@ -41,19 +46,7 @@ Player.prototype.draw = function() {
       this.y,
       this.width,
       this.height
-    )
-  } else {this.game.ctx.drawImage(
-    this.img,
-    0,
-    0,
-    this.img.width,
-    this.img.height,
-    this.x,
-    this.y,
-    this.width,
-    this.height
-  )};
-
+    );
 
   this.projectiles = this.projectiles.filter(function(p) {
     return p.y > 0;
@@ -78,8 +71,7 @@ Player.prototype.setListeners = function() {
       this.moveLeft = false;
     } else if (e.keyCode == 39) {
       this.moveRight = false;
-    } 
-    else if (e.keyCode === 32) {
+    } else if (e.keyCode === 32) {
       this.shootSpecial();
     }
   }.bind(this);
@@ -88,7 +80,10 @@ Player.prototype.setListeners = function() {
 Player.prototype.move = function() {
   if (this.moveLeft == true && this.x > 0) {
     this.x -= this.vx * this.ax;
-  } else if (this.moveRight == true && (this.x + this.width) <= this.game.canvas.width) {
+  } else if (
+    this.moveRight == true &&
+    this.x + this.width <= this.game.canvas.width
+  ) {
     this.x += this.vx * this.ax;
   } else if (this.moveLeft == false) {
     this.x = this.x;
@@ -100,16 +95,14 @@ Player.prototype.move = function() {
 };
 
 Player.prototype.shoot = function() {
-  if (this.playerLevel == 1) {
-    this.projectiles.push(new Projectile(this.game, 1, "player"));
+  if (this.playerLevel <= 1) {
+    this.projectiles.push(new Projectile(this.game, 2, "player"));
+    this.projectiles.push(new Projectile(this.game, 3, "player"));
   } else if (this.playerLevel == 2) {
-    this.projectiles.push(new Projectile(this.game, 2, "player"));
-    this.projectiles.push(new Projectile(this.game, 3, "player"));
-  } else if (this.playerLevel == 3) {
     this.projectiles.push(new Projectile(this.game, 1, "player"));
     this.projectiles.push(new Projectile(this.game, 2, "player"));
     this.projectiles.push(new Projectile(this.game, 3, "player"));
-  } else if (this.playerLevel >= 4) {
+  } else if (this.playerLevel >= 3) {
     this.projectiles.push(new Projectile(this.game, 1, "player"));
     this.projectiles.push(new Projectile(this.game, 2, "player"));
     this.projectiles.push(new Projectile(this.game, 3, "player"));
@@ -119,10 +112,10 @@ Player.prototype.shoot = function() {
   this.shootSound.play();
 };
 
-Player.prototype.shootSpecial = function () {
+Player.prototype.shootSpecial = function() {
   if (this.specialCount > 0) {
     this.projectiles.push(new Projectile(this.game, "special", "player"));
     this.specialShootSound.play();
-    this.specialCount --;
+    this.specialCount--;
   }
-}
+};

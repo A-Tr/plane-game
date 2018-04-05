@@ -10,11 +10,7 @@ function Game(canvas) {
   this.score = 0;
   this.highScore = 0;
 
-  this.itemTypes = [
-    "health",
-    "special",
-    "weapon"
-  ]
+  this.itemTypes = ["health", "special", "weapon"];
 
   this.enemyTypes = [
     "typeOne",
@@ -46,7 +42,7 @@ function Game(canvas) {
     this.levelUpSound,
     this.specialSound,
     this.playerHitSound,
-    this.gameOverSound,
+    this.gameOverSound
   ];
 
   // Dibujo del fondo inicial
@@ -89,7 +85,7 @@ Game.prototype.start = function() {
 
       this.generateItem();
 
-      if (this.framesCounter % 20 == 0) {
+      if (this.framesCounter % 5 == 0) {
         this.player.shoot();
       }
 
@@ -129,7 +125,7 @@ Game.prototype.reset = function() {
 // GAME OVER
 Game.prototype.gameOver = function() {
   this.clear();
-  this.sounds[6].play()
+  this.sounds[6].play();
   var that = this;
   if (this.score > this.highScore) {
     this.highScore = this.score;
@@ -234,7 +230,11 @@ Game.prototype.draw = function() {
   this.items.forEach(function(i) {
     i.draw();
   });
-  this.player.draw();
+  if (this.player.isDamaged === true && this.framesCounter % 5 === 0) {
+    this.player.draw(0);
+  } else {
+    this.player.draw(this.player.playerLevel);
+  }
 };
 
 // Mover elementos
@@ -261,9 +261,11 @@ Game.prototype.generateItem = function() {
   if (this.framesCounter % 200 == 0) {
     this.items.push(new Item(this, "points"));
   } else if (this.framesCounter % 300 == 0) {
-    this.items.push(new Item(this, this.itemTypes[Math.floor(Math.random() * 2)]));
-    this.items.push(new Item(this, this.itemTypes[2]))
-  } 
+    this.items.push(
+      new Item(this, this.itemTypes[Math.floor(Math.random() * 2)])
+    );
+    this.items.push(new Item(this, this.itemTypes[2]));
+  }
 };
 
 // Generar enemigos
@@ -388,9 +390,9 @@ Game.prototype.enemyShoot = function() {
           that.activeProjectiles.splice(indexE, 1);
           that.sounds[5].play();
           that.player.isDamaged = true;
-          setTimeout(function(){
+          setTimeout(function() {
             that.player.isDamaged = false;
-          }, 2000)
+          }, 2000);
         }
       }
     });
@@ -411,7 +413,7 @@ Game.prototype.enemyShoot = function() {
           that.items.splice(indexI, 1);
           that.score += 50;
 
-          if (i.itemType == "weapon" && that.player.playerLevel < 5) {
+          if (i.itemType == "weapon" && that.player.playerLevel <= 2) {
             that.player.playerLevel++;
             that.sounds[3].play();
           } else if (i.itemType == "health" && that.player.health < 5) {

@@ -11,7 +11,7 @@ function Enemy(game, enemyType) {
   this.width = 98;
   this.height = 50;
 
-  this.health = 2;
+  this.health = 10;
 
   this.isDestroyed = false;
 
@@ -49,7 +49,7 @@ function Enemy(game, enemyType) {
     this.vx = 8;
     this.y = 200;
     this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
+    this.health = 15;
   }
   
   if (enemyType === "typeSix" && !this.isDestroyed) {
@@ -57,7 +57,7 @@ function Enemy(game, enemyType) {
     this.x = 400 - this.width;
     this.y = 200;
     this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
+    this.health = 15;
   }
   
   if (enemyType === "typeSeven" && !this.isDestroyed) {
@@ -66,7 +66,7 @@ function Enemy(game, enemyType) {
     this.x = 0;
     this.y = 200;
     this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
+    this.health = 15;
   }
   
   if (enemyType === "typeEight" && !this.isDestroyed) {
@@ -75,7 +75,7 @@ function Enemy(game, enemyType) {
     this.y = 200;
     this.x = this.game.canvas.width - this.width;
     this.img.src = "images/enemy_two_sprite.png";
-    this.health = 3;
+    this.health = 15;
   }
   
   if (enemyType === "randomEnemy" && !this.isDestroyed) {
@@ -83,7 +83,7 @@ function Enemy(game, enemyType) {
     this.vy = Math.floor(Math.random() * 5);
     this.x = Math.floor(Math.random() * 400);
     this.y = Math.floor(Math.random() * 200);
-    this.health = 3;
+    this.health = 15;
     this.img.src = "images/enemy_two_sprite.png";
   } 
 
@@ -94,7 +94,7 @@ function Enemy(game, enemyType) {
     this.x = 50;
     this.width = 300;
     this.height = 200;
-    this.health = 40;
+    this.health = 200;
     this.img.src = "images/boss.png";
   }
 
@@ -105,7 +105,7 @@ function Enemy(game, enemyType) {
     this.x = 140;
     this.width = 120;
     this.height = 150;
-    this.health = 40;
+    this.health = 200;
     this.img.src = "images/boss_two.png";
   } 
   if (enemyType === "bossTwoA" && !this.isDestroyed) {
@@ -114,7 +114,7 @@ function Enemy(game, enemyType) {
     this.x = 280;
     this.width = 120;
     this.height = 150;
-    this.health = 40;
+    this.health = 200;
     this.img.src = "images/boss_two.png";
   } 
   

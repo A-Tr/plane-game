@@ -45,7 +45,7 @@ function Projectile(game, bulletType, whoShoots, x, y) {
       this.width = 122;
       this.height = 241;
       this.vy = -8
-      this.damage = 15;
+      this.damage = 75;
     }
 
   } else if (whoShoots === "enemy") {
@@ -62,7 +62,7 @@ function Projectile(game, bulletType, whoShoots, x, y) {
 
     this.y = y;
 
-    this.vy = 10;
+    this.vy = 8;
   }
 }
 
