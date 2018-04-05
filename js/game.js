@@ -408,7 +408,7 @@ Game.prototype.enemyShoot = function() {
           that.items.splice(indexI, 1);
           that.score += 100;
 
-          if (i.itemType == "weapon") {
+          if (i.itemType == "weapon" && that.player.playerLevel < 5) {
             that.player.playerLevel++;
             that.sounds[3].play();
           } else if (i.itemType == "health") {
