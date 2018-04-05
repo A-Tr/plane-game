@@ -9,7 +9,6 @@ function Game(canvas) {
   this.items = [];
   this.score = 0;
   this.highScore = 0;
-  //this.playerHealth = document.getElementById("player-health");
 
   this.enemyTypes = [
     "typeOne",
@@ -25,7 +24,22 @@ function Game(canvas) {
 
   this.canGenerate = true;
 
+  // Sonidos del juego
   this.explosionSound = new Audio("sounds/explosion_one.ogg");
+  this.coinSound = new Audio("sounds/coin.ogg");
+  this.healthSound = new Audio("sounds/oneup.ogg");
+  this.levelUpSound = new Audio("sounds/level_up.ogg");
+  this.specialSound = new Audio("sounds/get_spec.ogg");
+  this.playerHitSound = new Audio("sounds/player_hit.ogg")
+
+  this.sounds = [
+    this.explosionSound,
+    this.coinSound,
+    this.healthSound,
+    this.levelUpSound,
+    this.specialSound,
+    this.playerHitSound
+  ];
 
   // Dibujo del fondo inicial
   var grd = this.ctx.createLinearGradient(
@@ -61,18 +75,22 @@ Game.prototype.start = function() {
         this.generateEnemy(this.framesCounter, this.enemiesGenerated);
       }
 
-      if (this.framesCounter % 200) {this.checkEnemiesDestroyed()}
+      if (this.framesCounter % 200) {
+        this.checkEnemiesDestroyed();
+      }
 
       this.generateItem();
 
-      if (this.framesCounter % 20 == 0) {this.player.shoot()}
-      
+      if (this.framesCounter % 20 == 0) {
+        this.player.shoot();
+      }
+
       this.enemyShoot();
 
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
-      console.log(this.player.playerLevel)
+      console.log(this.player.playerLevel);
       this.move();
       this.draw();
 
@@ -152,24 +170,43 @@ Game.prototype.healthDraw = function() {
   this.img = new Image();
   this.img.src = "images/item_3.png";
   for (i = 1; i <= that.player.health; i++) {
-    this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, this.x, this.y, 28, 28)
-    this.x += 30
+    this.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x,
+      this.y,
+      28,
+      28
+    );
+    this.x += 30;
   }
 };
 
-
 // Dibujar munición especial
-Game.prototype.specialDraw = function () {
+Game.prototype.specialDraw = function() {
   var that = this;
   this.x = 280;
   this.y = 720;
   this.img = new Image();
   this.img.src = "images/bomb.png";
   for (i = 1; i <= that.player.specialCount; i++) {
-    this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, this.x, this.y, 32, 32)
-    this.x += 30
-  } 
-}
+    this.ctx.drawImage(
+      this.img,
+      0,
+      0,
+      this.img.width,
+      this.img.height,
+      this.x,
+      this.y,
+      32,
+      32
+    );
+    this.x += 30;
+  }
+};
 
 // Dibujar elementos
 Game.prototype.draw = function() {
@@ -211,7 +248,7 @@ Game.prototype.move = function() {
 Game.prototype.generateItem = function() {
   var that = this;
   if (this.framesCounter % 200 == 0) {
-    this.items.push(new Item(this, "points"));    
+    this.items.push(new Item(this, "points"));
   } else if (this.framesCounter % 350 == 0) {
     this.items.push(new Item(this, "weapon"));
     if (that.player.health < 5) {
@@ -263,7 +300,7 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
     } else if (enemiesGenerated >= 26 && enemiesGenerated < 40) {
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
       this.enemies.push(new Enemy(this, this.enemyTypes[8]));
-    } else if (enemiesGenerated == 40) {      
+    } else if (enemiesGenerated == 40) {
       this.canGenerate = false;
       this.enemies.push(new Enemy(this, "bossTwo"));
       this.enemies.push(new Enemy(this, "bossTwoA"));
@@ -282,15 +319,15 @@ Game.prototype.generateEnemy = function(framesCounter, enemiesGenerated) {
 
 //Eliminar enemigos
 Game.prototype.checkEnemiesDestroyed = function() {
-  this.enemies.forEach(function (e) {
-    var indexE = this.enemies.indexOf(e)
-    if (e.isDestroyed == true) {
-      this.enemies.splice(indexE, 1)
-    }
-  }.bind(this))
-}
-
-
+  this.enemies.forEach(
+    function(e) {
+      var indexE = this.enemies.indexOf(e);
+      if (e.isDestroyed == true) {
+        this.enemies.splice(indexE, 1);
+      }
+    }.bind(this)
+  );
+};
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
@@ -318,7 +355,7 @@ Game.prototype.enemyShoot = function() {
             that.player.projectiles.splice(indexP, 1);
             if (e.health <= 0) {
               e.destroyed();
-              that.explosionSound.play();
+              that.sounds[0].play();
               that.score += 5;
             }
           }
@@ -346,6 +383,7 @@ Game.prototype.enemyShoot = function() {
                 that.player.playerLevel -= 1;
               }
               e.enemyProjectiles.splice(indexEp, 1);
+              that.sounds[5].play();
             }
             if (that.player.health <= 0) {
             }
@@ -369,13 +407,19 @@ Game.prototype.enemyShoot = function() {
         if (indexI > -1) {
           that.items.splice(indexI, 1);
           that.score += 100;
+
           if (i.itemType == "weapon") {
             that.player.playerLevel++;
+            that.sounds[3].play();
           } else if (i.itemType == "health") {
-            that.player.health ++
+            that.player.health++;
+            that.sounds[2].play();
+            return;
           } else if (i.itemType == "special" && that.player.specialCount < 3) {
-            that.player.specialCount ++
+            that.player.specialCount++;
+            that.sounds[3].play();
           }
+          that.sounds[1].play();
         }
       }
     });

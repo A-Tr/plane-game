@@ -14,7 +14,8 @@ canvas {
 }
 
 #instructions {
-  margin: 50px;
+  text-align: center;
+  margin: 0 50px;
   width: 500px;
   float: left; 
 }

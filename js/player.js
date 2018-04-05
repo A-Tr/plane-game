@@ -18,6 +18,7 @@ function Player(game) {
   this.playerLevel = 1;
 
   this.shootSound = new Audio("sounds/shoot.ogg")
+  this.specialShootSound = new Audio("sounds/special_shoot.ogg")
 
   this.img = new Image();
   this.img.src = "images/plane.png";
@@ -104,6 +105,7 @@ Player.prototype.shoot = function() {
 Player.prototype.shootSpecial = function () {
   if (this.specialCount > 0) {
     this.projectiles.push(new Projectile(this.game, "special", "player"));
+    this.specialShootSound.play();
     this.specialCount --;
   }
 }

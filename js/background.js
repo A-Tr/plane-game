@@ -29,8 +29,10 @@ Background.prototype.draw = function() {
 Background.prototype.move = function() {
   if (this.game.enemiesGenerated > 12 && this.game.enemiesGenerated <= 25){
     this.y += this.dy * 1.33;
-  } else  if (this.game.enemiesGenerated > 26){
+  } else  if (this.game.enemiesGenerated > 26 && this.game.enemiesGenerated <= 40){
     this.y += this.dy * 1.66;
+  } else if (this.game.enemiesGenerated > 40) {
+    this.y += this.dy * 2;
   } else {
     this.y += this.dy
   }
