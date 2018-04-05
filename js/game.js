@@ -93,7 +93,6 @@ Game.prototype.start = function() {
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
-      console.log(this.player.playerLevel);
       this.move();
       this.draw();
 

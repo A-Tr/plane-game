@@ -1,3 +1,4 @@
+//Construir el jugador
 function Player(game) {
   this.x = 160;
   this.y = 620;
@@ -34,6 +35,7 @@ function Player(game) {
   this.setListeners();
 }
 
+// Dibujar el jugador
 Player.prototype.draw = function(level) {
     this.img.src = this.imagesArray[level];
     this.game.ctx.drawImage(
@@ -57,6 +59,8 @@ Player.prototype.draw = function(level) {
   });
 };
 
+
+// Controles
 Player.prototype.setListeners = function() {
   document.onkeydown = function(e) {
     if (e.keyCode == 37) {
@@ -77,6 +81,8 @@ Player.prototype.setListeners = function() {
   }.bind(this);
 };
 
+
+// Movimiento
 Player.prototype.move = function() {
   if (this.moveLeft == true && this.x > 0) {
     this.x -= this.vx * this.ax;
@@ -94,6 +100,7 @@ Player.prototype.move = function() {
   }
 };
 
+// Disparo
 Player.prototype.shoot = function() {
   if (this.playerLevel <= 1) {
     this.projectiles.push(new Projectile(this.game, 2, "player"));
