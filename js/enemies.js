@@ -83,7 +83,7 @@ function Enemy(game, enemyType) {
     this.vy = Math.floor(Math.random() * 5);
     this.x = Math.floor(Math.random() * 400);
     this.y = Math.floor(Math.random() * 200);
-    this.health = 4;
+    this.health = 3;
     this.img.src = "images/enemy_two_sprite.png";
   } 
 

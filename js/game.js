@@ -336,7 +336,7 @@ Game.prototype.checkEnemiesDestroyed = function() {
 
 //Disparo enemigo
 Game.prototype.enemyShoot = function() {
-  if (this.framesCounter % 80 == 0) {
+  if (this.framesCounter % 100 == 0) {
     this.enemies.forEach(function(e) {
       e.shoot();
     });
@@ -361,7 +361,7 @@ Game.prototype.enemyShoot = function() {
             if (e.health <= 0) {
               e.destroyed();
               that.sounds[0].play();
-              that.score += 5;
+              that.score += 20;
             }
           }
         }
@@ -409,7 +409,7 @@ Game.prototype.enemyShoot = function() {
         var indexI = that.items.indexOf(i);
         if (indexI > -1) {
           that.items.splice(indexI, 1);
-          that.score += 100;
+          that.score += 50;
 
           if (i.itemType == "weapon" && that.player.playerLevel < 5) {
             that.player.playerLevel++;
