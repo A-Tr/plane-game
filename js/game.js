@@ -6,7 +6,7 @@ function Game(canvas) {
   this.framesCounter = 0;
   this.enemies = [];
   this.enemiesGenerated = 0;
-  this.items = [];
+  this.activeProjectiles = [];
   this.score = 0;
   this.highScore = 0;
 
@@ -30,7 +30,7 @@ function Game(canvas) {
   this.healthSound = new Audio("sounds/oneup.ogg");
   this.levelUpSound = new Audio("sounds/level_up.ogg");
   this.specialSound = new Audio("sounds/get_spec.ogg");
-  this.playerHitSound = new Audio("sounds/player_hit.ogg")
+  this.playerHitSound = new Audio("sounds/player_hit.ogg");
 
   this.sounds = [
     this.explosionSound,
@@ -86,7 +86,6 @@ Game.prototype.start = function() {
       }
 
       this.enemyShoot();
-
       this.checkEnemyDamage();
       this.checkItem();
       this.checkPlayerDamage();
@@ -151,12 +150,15 @@ Game.prototype.gameOver = function() {
   clearInterval(this.interval);
 };
 
-// Limpiar pantalla
+// Limpiar pantalla y proyectiles sobrantes
 Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.activeProjectiles = this.activeProjectiles.filter(function(p) {
+    return p.y < 800;
+  });
 };
 
-// Dibujar puntuacion
+// Dibujar puntuación
 Game.prototype.scoreDraw = function() {
   (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#00ffff");
   this.ctx.fillText(this.score, 190, 790);
@@ -216,9 +218,9 @@ Game.prototype.draw = function() {
   this.specialDraw();
   this.enemies.forEach(function(e) {
     e.draw();
-    e.enemyProjectiles.forEach(function(ep) {
-      ep.draw();
-    });
+  });
+  this.activeProjectiles.forEach(function(e) {
+    e.draw();
   });
   this.items.forEach(function(i) {
     i.draw();
@@ -231,9 +233,9 @@ Game.prototype.move = function() {
   this.background.move();
   this.enemies.forEach(function(e) {
     e.move();
-    e.enemyProjectiles.forEach(function(ep) {
-      ep.move();
-    });
+  });
+  this.activeProjectiles.forEach(function(e) {
+    e.move();
   });
   this.items.forEach(function(i) {
     i.move();
@@ -367,30 +369,24 @@ Game.prototype.enemyShoot = function() {
   // Comprobar daño al jugador
   Game.prototype.checkPlayerDamage = function() {
     var that = this;
-    this.enemies.forEach(
-      function(e) {
-        e.enemyProjectiles.forEach(function(ep) {
-          if (
-            ep.x < that.player.x + that.player.width &&
-            ep.x + ep.width > that.player.x &&
-            ep.y < that.player.y + that.player.height &&
-            ep.y + ep.height > that.player.y
-          ) {
-            var indexEp = e.enemyProjectiles.indexOf(ep);
-            if (indexEp > -1) {
-              that.player.health -= 1;
-              if (that.player.playerLevel > 1) {
-                that.player.playerLevel -= 1;
-              }
-              e.enemyProjectiles.splice(indexEp, 1);
-              that.sounds[5].play();
-            }
-            if (that.player.health <= 0) {
-            }
+    this.activeProjectiles.forEach(function(e) {
+      if (
+        e.x < that.player.x + that.player.width &&
+        e.x + e.width > that.player.x &&
+        e.y < that.player.y + that.player.height &&
+        e.y + e.height > that.player.y
+      ) {
+        var indexE = that.activeProjectiles.indexOf(e);
+        if (indexE > -1) {
+          that.player.health -= 1;
+          if (that.player.playerLevel > 1) {
+            that.player.playerLevel -= 1;
           }
-        });
-      }.bind(this)
-    );
+          that.activeProjectiles.splice(indexE, 1);
+          that.sounds[5].play();
+        }
+      }
+    });
   };
 
   // Comprobar si se ha cogido objeto

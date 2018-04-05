@@ -16,6 +16,7 @@ function Player(game) {
   this.projectiles = [];
   this.specialCount = 3;
   this.playerLevel = 1;
+  this.isDamaged = false;
 
   this.shootSound = new Audio("sounds/shoot.ogg")
   this.specialShootSound = new Audio("sounds/special_shoot.ogg")

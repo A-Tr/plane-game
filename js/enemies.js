@@ -12,7 +12,6 @@ function Enemy(game, enemyType) {
   this.height = 50;
 
   this.health = 2;
-  this.enemyProjectiles = [];
 
   this.isDestroyed = false;
 
@@ -22,9 +21,6 @@ function Enemy(game, enemyType) {
   this.imgDestroyed = new Image();
   this.imgDestroyed.src = "images/explosion.png";
 
-  this.enemyProjectiles = this.enemyProjectiles.filter(function(p) {
-    return p.y < 800;
-  });
 
   //Tipos de enemigos
   if (enemyType === "typeOne" && !this.isDestroyed) {
@@ -172,24 +168,24 @@ Enemy.prototype.move = function() {
 
 Enemy.prototype.shoot = function() {
   if (this.enemyType == "bossOne") {
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
     );
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 2, "enemy", this.x + this.width / 2, this.y)
     );
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 3, "enemy", this.x + this.width / 2, this.y)
     );
   } else if (this.enemyType == "bossTwo" || this.enemyType == "bossTwoA") {
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 1, "enemy", this.x + this.width / 3, this.y)
     );
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 1, "enemy", this.x + this.width * 2 / 3, this.y)
     );
     } else {
-    this.enemyProjectiles.push(
+    this.game.activeProjectiles.push(
       new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
     );
   }
