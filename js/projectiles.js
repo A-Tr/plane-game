@@ -38,6 +38,10 @@ function Projectile(game, bulletType, whoShoots, x, y) {
       this.vx = 1.5;
       this.x += 15;
       this.damage = 0.50;
+    } else if (this.bulletType == "special") {
+      this.width = 122;
+      this.height = 241;
+      this.damage = 10;
     }
     this.vy = -10;
 

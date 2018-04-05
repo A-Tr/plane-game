@@ -64,7 +64,9 @@ Game.prototype.start = function() {
       if (this.framesCounter % 200) {this.checkEnemiesDestroyed()}
 
       this.generateItem();
-      if (this.framesCounter % 15 == 0) {this.player.shoot()}
+
+      if (this.framesCounter % 20 == 0) {this.player.shoot()}
+      
       this.enemyShoot();
 
       this.checkEnemyDamage();
@@ -139,20 +141,42 @@ Game.prototype.clear = function() {
 // Dibujar puntuacion
 Game.prototype.scoreDraw = function() {
   (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#596cea");
-  this.ctx.fillText("Score: " + this.score, 30, 750);
+  this.ctx.fillText(this.score, 190, 790);
 };
 
 // Dibujar vidas
 Game.prototype.healthDraw = function() {
-  this.ctx.fillStyle = "#dc1054";
-  this.ctx.fillText("Lives: " + this.player.health, 250, 750);
+  var that = this;
+  this.x = 10;
+  this.y = 720;
+  this.img = new Image();
+  this.img.src = "images/item_3.png";
+  for (i = 1; i <= that.player.health; i++) {
+    this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, this.x, this.y, 28, 28)
+    this.x += 30
+  }
 };
+
+
+// Dibujar munición especial
+Game.prototype.specialDraw = function () {
+  var that = this;
+  this.x = 280;
+  this.y = 720;
+  this.img = new Image();
+  this.img.src = "images/bomb.png";
+  for (i = 1; i <= that.player.specialCount; i++) {
+    this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, this.x, this.y, 32, 32)
+    this.x += 30
+  } 
+}
 
 // Dibujar elementos
 Game.prototype.draw = function() {
   this.background.draw();
   this.scoreDraw();
   this.healthDraw();
+  this.specialDraw();
   this.enemies.forEach(function(e) {
     e.draw();
     e.enemyProjectiles.forEach(function(ep) {
@@ -185,10 +209,18 @@ Game.prototype.move = function() {
 
 // Generar objetos
 Game.prototype.generateItem = function() {
-  if (this.framesCounter % 300 == 0) {
-    this.items.push(new Item(this, "points"));
-  } else if (this.framesCounter % 500 == 0) {
+  var that = this;
+  if (this.framesCounter % 200 == 0) {
+    this.items.push(new Item(this, "points"));    
+  } else if (this.framesCounter % 350 == 0) {
     this.items.push(new Item(this, "weapon"));
+    if (that.player.health < 5) {
+      this.items.push(new Item(this, "health"));
+    }
+  } else if (this.framesCounter % 500 == 0) {
+    if (that.player.specialCount < 3) {
+      this.items.push(new Item(this, "special"));
+    }
   }
 };
 
@@ -268,7 +300,7 @@ Game.prototype.enemyShoot = function() {
     });
   }
 
-  //Comprobar daño enemigo
+  //Comprobar daño a los enemigo
   Game.prototype.checkEnemyDamage = function() {
     var that = this;
     this.player.projectiles.forEach(function(p) {
@@ -282,13 +314,12 @@ Game.prototype.enemyShoot = function() {
           e.health -= p.damage;
           var indexE = that.enemies.indexOf(e);
           var indexP = that.player.projectiles.indexOf(p);
-          if (indexE > -1) {
+          if (indexE > -1 && p.bulletType != "special") {
             that.player.projectiles.splice(indexP, 1);
             if (e.health <= 0) {
               e.destroyed();
               that.explosionSound.play();
               that.score += 5;
-              // that.enemies.splice(indexE, 1);
             }
           }
         }
@@ -340,6 +371,10 @@ Game.prototype.enemyShoot = function() {
           that.score += 100;
           if (i.itemType == "weapon") {
             that.player.playerLevel++;
+          } else if (i.itemType == "health") {
+            that.player.health ++
+          } else if (i.itemType == "special" && that.player.specialCount < 3) {
+            that.player.specialCount ++
           }
         }
       }

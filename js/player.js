@@ -14,8 +14,8 @@ function Player(game) {
 
   this.health = 5;
   this.projectiles = [];
-  this.item = []
-  this.playerLevel = 4;
+  this.specialCount = 3;
+  this.playerLevel = 1;
 
   this.shootSound = new Audio("sounds/shoot.ogg")
 
@@ -62,7 +62,7 @@ Player.prototype.setListeners = function() {
       this.moveRight = false;
     } 
     else if (e.keyCode === 32) {
-      this.shoot();
+      this.shootSpecial();
     }
   }.bind(this);
 };
@@ -100,3 +100,10 @@ Player.prototype.shoot = function() {
   }
   this.shootSound.play();
 };
+
+Player.prototype.shootSpecial = function () {
+  if (this.specialCount > 0) {
+    this.projectiles.push(new Projectile(this.game, "special", "player"));
+    this.specialCount --;
+  }
+}
