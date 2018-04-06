@@ -169,24 +169,24 @@ Enemy.prototype.move = function() {
 Enemy.prototype.shoot = function() {
   if (this.enemyType == "bossOne") {
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 2, "enemy", this.x + this.width / 2, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x + this.width / 2, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 3, "enemy", this.x + this.width / 2, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x + this.width, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
   } else if (this.enemyType == "bossTwo" || this.enemyType == "bossTwoA") {
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 3, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x + this.width / 3, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width * 2 / 3, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x + this.width * 2 / 3, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
     } else {
     this.game.activeProjectiles.push(
-      new Projectile(this.game, 1, "enemy", this.x + this.width / 2, this.y)
+      new Projectile(this.game, "normal", "enemy", this.x + this.width / 2, this.y, 0, 8, 1, "images/enemy_missile.png", 20, 40)
     );
   }
 };

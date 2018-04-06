@@ -429,9 +429,12 @@ Game.prototype.update = function() {
         function(e) {
           if (this.checkCollision(e, p)) {
             e.health -= p.damage;
+            if (p.type == "special"){
+              console.log(e.health)
+            }
             var indexE = this.enemies.indexOf(e);
             var indexP = this.player.projectiles.indexOf(p);
-            if (indexE > -1 && p.bulletType != "special") {
+            if (indexE > -1 && p.type != "special") {
               this.player.projectiles.splice(indexP, 1);
               if (e.health <= 0) {
                 e.destroyed();
@@ -452,6 +455,7 @@ Game.prototype.update = function() {
         var indexI = this.items.indexOf(i);
         if (indexI > -1) {
           this.items.splice(indexI, 1);
+          this.sounds[1].play();
           this.score += 50;
           if (i.itemType == "weapon" && this.player.playerLevel <= 2) {
             this.player.playerLevel++;
