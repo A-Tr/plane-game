@@ -11,7 +11,12 @@ function Game(canvas) {
   this.highScore = 0;
   this.loop = 0;
 
-  this.gameOverSentences = ["JUST ONE MORE TIME", "AGAIN", "KEEP TRYING", "DON'T DISSAPOINT ME"]
+  this.gameOverSentences = [
+    "ONE MORE TIME",
+    "AGAIN",
+    "KEEP TRYING",
+    "ANOTHER ONE?"
+  ];
 
   this.itemTypes = ["health", "special", "weapon"];
 
@@ -60,14 +65,26 @@ function Game(canvas) {
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-  var linejump = 36
+  var linejump = 36;
   this.ctx.fillStyle = "#00ffff";
   this.ctx.font = "bold 22px Orbitron";
   this.ctx.fillText("YOUR MISSION:", 10, this.canvas.height / 4 - linejump);
-  this.ctx.fillText("Get on our latest experimental", 10, this.canvas.height / 4);
-  this.ctx.fillText("ship and exterminate ", 10, this.canvas.height / 4 + linejump)
-  this.ctx.fillText("the invaders.", 10, this.canvas.height / 4 + linejump * 2)
-  this.ctx.fillText("Good luck.", 10, this.canvas.height / 4 + 72 + linejump * 3)
+  this.ctx.fillText(
+    "Get on our latest experimental",
+    10,
+    this.canvas.height / 4
+  );
+  this.ctx.fillText(
+    "ship and exterminate ",
+    10,
+    this.canvas.height / 4 + linejump
+  );
+  this.ctx.fillText("the invaders.", 10, this.canvas.height / 4 + linejump * 2);
+  this.ctx.fillText(
+    "Good luck.",
+    10,
+    this.canvas.height / 4 + 72 + linejump * 3
+  );
 }
 
 // Empezar el juego
@@ -101,9 +118,11 @@ Game.prototype.start = function() {
       }
 
       this.enemyShoot();
-      this.checkEnemyDamage();
-      this.checkItem();
-      this.checkPlayerDamage();
+      // this.checkEnemyDamage();
+      // this.checkItem();
+      // this.checkPlayerDamage();
+
+      this.update();
       this.move();
       this.draw();
 
@@ -136,7 +155,7 @@ Game.prototype.reset = function() {
 Game.prototype.gameOver = function() {
   this.clear();
   this.sounds[6].play();
-  this.loop++
+  this.loop++;
   var that = this;
   if (this.score > this.highScore) {
     this.highScore = this.score;
@@ -157,14 +176,19 @@ Game.prototype.gameOver = function() {
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   this.ctx.fillStyle = "#00ffff";
+  var linejump = 36;
   this.ctx.font = "bold 42px Orbitron";
   this.ctx.fillText("YOU'RE DEAD", 30, 250);
   this.ctx.font = "bold 26px Orbitron";
-  this.ctx.fillText("Please press PLAY", 30, 250 + 36);
-  this.ctx.fillText("YOUR SCORE: " + this.score, 30, 250 + 36 * 2);
-  this.ctx.fillText("HIGH SCORE: " + this.highScore, 30, 250 + 36 * 3);
+  this.ctx.fillText("Please press PLAY", 30, 250 + linejump);
+  this.ctx.fillText("YOUR SCORE: " + this.score, 30, 250 + linejump * 2);
+  this.ctx.fillText("HIGH SCORE: " + this.highScore, 30, 250 + linejump * 3);
   this.ctx.font = "bold 38px Orbitron";
-  this.ctx.fillText(this.gameOverSentences[Math.floor(Math.random() * 4)] , 10, 600);
+  this.ctx.fillText(
+    this.gameOverSentences[Math.floor(Math.random() * 4)],
+    10,
+    600
+  );
   clearInterval(this.interval);
 };
 
@@ -357,89 +381,91 @@ Game.prototype.enemyShoot = function() {
     });
   }
 
-  //Comprobar daño a los enemigo
-  Game.prototype.checkEnemyDamage = function() {
-    var that = this;
-    this.player.projectiles.forEach(function(p) {
-      that.enemies.forEach(function(e) {
-        if (
-          p.x < e.x + e.width &&
-          p.x + p.width > e.x &&
-          p.y < e.y + e.height &&
-          p.y + p.height > e.y
-        ) {
-          e.health -= p.damage;
-          var indexE = that.enemies.indexOf(e);
-          var indexP = that.player.projectiles.indexOf(p);
-          if (indexE > -1 && p.bulletType != "special") {
-            that.player.projectiles.splice(indexP, 1);
-            if (e.health <= 0) {
-              e.destroyed();
-              that.sounds[0].play();
-              that.score += 20;
+
+// Comprobar cada colisión
+  Game.prototype.checkCollision = function(a, b) {
+    if (
+      a.x < b.x + b.width &&
+      a.x + a.width > b.x &&
+      a.y < b.y + b.height &&
+      a.y + a.height > b.y
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+};
+
+// Efectos de las colisiones
+Game.prototype.update = function() {
+  // Disparos enemigos contra player
+  this.activeProjectiles.forEach(
+    function(e) {
+      if (this.checkCollision(e, this.player)) {
+        var indexE = this.activeProjectiles.indexOf(e);
+        if (indexE > -1 && this.player.isDamaged === false) {
+          this.player.health -= 1;
+          if (this.player.playerLevel > 1) {
+            this.player.playerLevel -= 1;
+          }
+          this.activeProjectiles.splice(indexE, 1);
+          this.sounds[5].play();
+          this.player.isDamaged = true;
+          setTimeout(
+            function() {
+              this.player.isDamaged = false;
+            }.bind(this),
+            2000
+          );
+        }
+      }
+    }.bind(this)
+  );
+  // Disparos del player contra enemigos
+  this.player.projectiles.forEach(
+    function(p) {
+      this.enemies.forEach(
+        function(e) {
+          if (this.checkCollision(e, p)) {
+            e.health -= p.damage;
+            var indexE = this.enemies.indexOf(e);
+            var indexP = this.player.projectiles.indexOf(p);
+            if (indexE > -1 && p.bulletType != "special") {
+              this.player.projectiles.splice(indexP, 1);
+              if (e.health <= 0) {
+                e.destroyed();
+                this.sounds[0].play();
+                this.score += 20;
+              }
             }
           }
-        }
-      });
-    });
-  };
+        }.bind(this)
+      );
+    }.bind(this)
+  );
 
-  // Comprobar daño al jugador
-  Game.prototype.checkPlayerDamage = function() {
-    var that = this;
-    this.activeProjectiles.forEach(function(e) {
-      if (
-        e.x < that.player.x + that.player.width &&
-        e.x + e.width > that.player.x &&
-        e.y < that.player.y + that.player.height &&
-        e.y + e.height > that.player.y
-      ) {
-        var indexE = that.activeProjectiles.indexOf(e);
-        if (indexE > -1 && that.player.isDamaged === false) {
-          that.player.health -= 1;
-          if (that.player.playerLevel > 1) {
-            that.player.playerLevel -= 1;
-          }
-          that.activeProjectiles.splice(indexE, 1);
-          that.sounds[5].play();
-          that.player.isDamaged = true;
-          setTimeout(function() {
-            that.player.isDamaged = false;
-          }, 2000);
-        }
-      }
-    });
-  };
-
-  // Comprobar si se ha cogido objeto
-  Game.prototype.checkItem = function() {
-    var that = this;
-    this.items.forEach(function(i) {
-      if (
-        i.x < that.player.x + that.player.width &&
-        i.x + i.width > that.player.x &&
-        i.y < that.player.y + that.player.height &&
-        i.y + i.height > that.player.y
-      ) {
-        var indexI = that.items.indexOf(i);
+  // Items que recoge el player
+  this.items.forEach(
+    function(i) {
+      if (this.checkCollision(i, this.player)) {
+        var indexI = this.items.indexOf(i);
         if (indexI > -1) {
-          that.items.splice(indexI, 1);
-          that.score += 50;
-
-          if (i.itemType == "weapon" && that.player.playerLevel <= 2) {
-            that.player.playerLevel++;
-            that.sounds[3].play();
-          } else if (i.itemType == "health" && that.player.health < 5) {
-            that.player.health++;
-            that.sounds[2].play();
+          this.items.splice(indexI, 1);
+          this.score += 50;
+          if (i.itemType == "weapon" && this.player.playerLevel <= 2) {
+            this.player.playerLevel++;
+            this.sounds[3].play();
+          } else if (i.itemType == "health" && this.player.health < 5) {
+            this.player.health++;
+            this.sounds[2].play();
             return;
-          } else if (i.itemType == "special" && that.player.specialCount < 3) {
-            that.player.specialCount++;
-            that.sounds[3].play();
+          } else if (i.itemType == "special" && this.player.specialCount < 3) {
+            this.player.specialCount++;
+            this.sounds[3].play();
           }
-          that.sounds[1].play();
         }
       }
-    });
-  };
+    }.bind(this)
+  );
 };
