@@ -164,15 +164,15 @@ Game.prototype.gameOver = function() {
   this.ctx.font = "bold 42px Orbitron";
   this.ctx.fillText("YOU'RE DEAD", 10, 50);
   this.ctx.font = "bold 26px Orbitron";
-  this.ctx.fillText("Please press PLAY", 10, 550 + linejump);
-  this.ctx.fillText("YOUR SCORE: " + this.score, 10, 50 + linejump * 2);
-  this.ctx.fillText("HIGH SCORE: " + this.highScore, 10, 50 + linejump * 3);
+  this.ctx.fillText("YOUR SCORE: " + this.score, 10, 50 + linejump);
+  this.ctx.fillText("HIGH SCORE: " + this.highScore, 10, 50 + linejump * 2);
+  this.ctx.fillText("Please press PLAY", 10, 50 + linejump * 7);
   this.ctx.font = "bold 38px Orbitron";
-  this.ctx.fillText(
-    this.gameOverSentences[Math.floor(Math.random() * 4)],
-    10,
-    280
-  );
+    this.ctx.fillText(
+      this.gameOverSentences[Math.floor(Math.random() * 4)],
+      10,
+      220
+    );
   clearInterval(this.interval);
 };
 

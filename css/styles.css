@@ -82,4 +82,8 @@ img {
   .tch-ctrl {
     display: none;
   }
+
+  #start-btn {
+    bottom: 300px;
+  }
 }
