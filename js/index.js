@@ -11,4 +11,12 @@ window.onload = function() {
   document.getElementById("left-btn").ontouchend = function() {
     game.player.moveLeft = false;
   }
+
+  document.getElementById("right-btn").ontouchstart = function() {
+    game.player.moveRight = true;
+  }
+  document.getElementById("right-btn").ontouchend = function() {
+    game.player.moveRight = false;
+  }
+
 }
