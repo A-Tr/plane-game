@@ -73,26 +73,6 @@ function Game(canvas) {
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-  var linejump = 36;
-  this.ctx.fillStyle = "#00ffff";
-  this.ctx.font = "bold 22px Orbitron";
-  this.ctx.fillText("YOUR MISSION:", 10, this.canvas.height / 4 - linejump);
-  this.ctx.fillText(
-    "Get on our latest experimental",
-    10,
-    this.canvas.height / 4
-  );
-  this.ctx.fillText(
-    "ship and exterminate ",
-    10,
-    this.canvas.height / 4 + linejump
-  );
-  this.ctx.fillText("the invaders.", 10, this.canvas.height / 4 + linejump * 2);
-  this.ctx.fillText(
-    "Good luck.",
-    10,
-    this.canvas.height / 4 + 72 + linejump * 3
-  );
 }
 
 // Empezar el juego
@@ -120,7 +100,7 @@ Game.prototype.start = function() {
       }
 
       this.generateItem();
-      
+
       if (this.framesCounter % 5 == 0) {
         this.player.shoot();
       }
@@ -410,7 +390,7 @@ Game.prototype.update = function() {
       if (this.checkCollision(e, this.player)) {
         var indexE = this.activeProjectiles.indexOf(e);
         if (indexE > -1 && this.player.isDamaged === false) {
-          // this.player.health -= 1;
+          this.player.health -= 1;
           if (this.player.playerLevel > 1) {
             this.player.playerLevel -= 1;
           }

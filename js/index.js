@@ -11,6 +11,7 @@ window.onload = function() {
     };
 
   };
+
   leftButton.ontouchstart = function() {
     game.player.moveLeft = true;
   }
@@ -24,5 +25,9 @@ window.onload = function() {
 
   rightButton.ontouchend = function() {
     game.player.moveRight = false;
+  }
+
+  document.getElementById("spec-shoot").ontouchstart = function () {
+    game.player.shootSpecial()
   }
 }

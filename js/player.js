@@ -14,7 +14,7 @@ function Player(game) {
   this.x = 160;
   this.y = this.game.canvas.height - 120;
   
-  this.health = 1;
+  this.health = 5;
   this.projectiles = [];
   this.specialCount = 3;
   this.playerLevel = 1;
