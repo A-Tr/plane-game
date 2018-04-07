@@ -54,7 +54,8 @@ canvas {
   height: 300px;
   top: 0;
 }
-#right-btn {
+
+#right-ctrl {
   right: 0;
 }
 

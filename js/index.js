@@ -1,7 +1,7 @@
 window.onload = function() {
   var game = new Game("canvas");
-  var leftButton = document.getElementById("left-btn");
-  var rightButton = document.getElementById("right-btn");
+  var leftButton = document.getElementById("left-ctrl");
+  var rightButton = document.getElementById("right-ctrl");
 
   document.getElementById("start-btn").onclick = function() {
     if (game.gameOn==true){return}
