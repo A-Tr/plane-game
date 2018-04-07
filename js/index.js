@@ -1,5 +1,7 @@
 window.onload = function() {
   var game = new Game("canvas");
+  var leftButton = document.getElementById("left-btn");
+  var rightButton = document.getElementById("right-btn");
 
   document.getElementById("start-btn").onclick = function() {
     if (game.gameOn==true){return}
@@ -9,18 +11,18 @@ window.onload = function() {
     };
 
   };
-  document.getElementById("left-btn").ontouchstart = function() {
+  leftButton.ontouchstart = function() {
     game.player.moveLeft = true;
   }
-  document.getElementById("left-btn").ontouchend = function() {
+  leftButton.ontouchend = function() {
     game.player.moveLeft = false;
   }
 
-  document.getElementById("right-btn").ontouchstart = function() {
+  rightButton.ontouchstart = function() {
     game.player.moveRight = true;
   }
 
-  document.getElementById("right-btn").ontouchend = function() {
+  rightButton.ontouchend = function() {
     game.player.moveRight = false;
   }
 }

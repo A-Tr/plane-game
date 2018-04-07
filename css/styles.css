@@ -9,7 +9,7 @@ body {
 canvas {
   border: 1px solid black;
   display: block;
-  background-color: #FFF
+  background-color: #FFF;
 }
 
 #instructions {

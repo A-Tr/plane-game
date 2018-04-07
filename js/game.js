@@ -3,6 +3,14 @@ function Game(canvas) {
   this.ctx = this.canvas.getContext("2d");
   this.gameOn = false;
 
+  if (window.innerWidth > 400) {
+    this.canvas.width = 400;
+    this.canvas.height = 800;
+  } else {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
   this.framesCounter = 0;
   this.enemies = [];
   this.enemiesGenerated = 0;
