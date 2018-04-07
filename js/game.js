@@ -405,7 +405,7 @@ Game.prototype.update = function() {
       if (this.checkCollision(e, this.player)) {
         var indexE = this.activeProjectiles.indexOf(e);
         if (indexE > -1 && this.player.isDamaged === false) {
-          this.player.health -= 1;
+          //this.player.health -= 1;
           if (this.player.playerLevel > 1) {
             this.player.playerLevel -= 1;
           }

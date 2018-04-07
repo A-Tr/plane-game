@@ -15,8 +15,16 @@ window.onload = function() {
   document.getElementById("right-btn").ontouchstart = function() {
     game.player.moveRight = true;
   }
+
   document.getElementById("right-btn").ontouchend = function() {
     game.player.moveRight = false;
   }
 
+  document.getElementById("left-btn").onmouseover = function() {
+    game.player.moveLeft = true;
+    console.log("hola")
+  }
+  document.getElementById("left-btn").onmouseout = function() {
+    game.player.moveLeft = false;
+  }
 }

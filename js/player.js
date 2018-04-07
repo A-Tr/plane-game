@@ -13,7 +13,7 @@ function Player(game) {
   this.width = 76;
   this.height = 100;
 
-  this.health = 5;
+  this.health = 1;
   this.projectiles = [];
   this.specialCount = 3;
   this.playerLevel = 1;

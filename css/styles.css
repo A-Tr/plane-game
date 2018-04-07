@@ -15,8 +15,7 @@ canvas {
 #instructions {
   text-align: center;
   margin: 0 50px;
-  width: 500px;
-  float: left; 
+  width: 500px; 
 }
 
 #start-btn {
@@ -51,6 +50,7 @@ h2 {
   background-color: lightgray;
   opacity: 0.5;
   bottom: 180px;
+  z-index: 1;
 }
 
 #right-btn {
