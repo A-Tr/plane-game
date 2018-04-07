@@ -8,6 +8,7 @@ window.onload = function() {
     else {
       game.start()
       document.getElementById("start-btn").style.visibility = "hidden";
+      document.getElementById("instructions").style.visibility = "hidden";
     };
 
   };

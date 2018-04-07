@@ -57,6 +57,12 @@ canvas {
   right: 0;
 }
 
+img {
+  display: block;
+  position: absolute;
+  top: 0;
+}
+
 @media (min-width: 800px) {
   #game {
     width: 400px;
