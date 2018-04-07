@@ -73,6 +73,11 @@ function Game(canvas) {
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+  this.img = new Image()
+  this.img.src = "images/instructions.png";
+  debugger
+  this.ctx.drawImage(this.img, 0, 0);
+  debugger
 }
 
 // Empezar el juego
