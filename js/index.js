@@ -5,4 +5,10 @@ window.onload = function() {
     if (game.gameOn==true){return}
     else {game.start()};
   };
+  document.getElementById("left-btn").ontouchstart = function() {
+    game.player.moveLeft = true;
+  }
+  document.getElementById("left-btn").ontouchend = function() {
+    game.player.moveLeft = false;
+  }
 }

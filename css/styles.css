@@ -9,7 +9,6 @@ body {
 canvas {
   border: 1px solid black;
   display: block;
-  float: left;
   background-color: #FFF
 }
 
@@ -20,7 +19,7 @@ canvas {
   float: left; 
 }
 
-button {
+#start-btn {
   width: 200px;
   height: 80px;
   font-family: 'Orbitron', sans-serif;
@@ -41,4 +40,19 @@ img {
 
 h2 {
   font-size: 50px;
+}
+
+
+.tch-ctrl {
+  position: relative;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  background-color: lightgray;
+  opacity: 0.5;
+  bottom: 180px;
+}
+
+#right-btn {
+  left: 288px;
 }
