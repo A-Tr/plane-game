@@ -163,7 +163,7 @@ Game.prototype.gameOver = function() {
   setTimeout(function() {
     that.gameOn = false;
   }, 1000);
-
+  document.getElementById("start-btn").style.visibility = "visible";
   var grd = this.ctx.createLinearGradient(
     0,
     0,
@@ -405,7 +405,7 @@ Game.prototype.update = function() {
       if (this.checkCollision(e, this.player)) {
         var indexE = this.activeProjectiles.indexOf(e);
         if (indexE > -1 && this.player.isDamaged === false) {
-          //this.player.health -= 1;
+          this.player.health -= 1;
           if (this.player.playerLevel > 1) {
             this.player.playerLevel -= 1;
           }

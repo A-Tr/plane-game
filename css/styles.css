@@ -14,17 +14,18 @@ canvas {
 
 #instructions {
   text-align: center;
-  margin: 0 50px;
-  width: 500px; 
+  width: 400px; 
 }
 
 #start-btn {
   width: 200px;
   height: 80px;
   font-family: 'Orbitron', sans-serif;
+  position: absolute;
+  bottom: 400px;
+  left: 100px;
   border-radius: 10px;
   background-color: darkmagenta;
-  margin: 65px 50px;
   text-align: center;
   vertical-align: middle;
   color: #00ffff;
@@ -41,6 +42,10 @@ h2 {
   font-size: 50px;
 }
 
+#game {
+  width: 400px;
+  position: relative;
+}
 
 .tch-ctrl {
   position: relative;

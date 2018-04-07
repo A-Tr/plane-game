@@ -3,7 +3,11 @@ window.onload = function() {
 
   document.getElementById("start-btn").onclick = function() {
     if (game.gameOn==true){return}
-    else {game.start()};
+    else {
+      game.start()
+      document.getElementById("start-btn").style.visibility = "hidden";
+    };
+
   };
   document.getElementById("left-btn").ontouchstart = function() {
     game.player.moveLeft = true;
@@ -18,13 +22,5 @@ window.onload = function() {
 
   document.getElementById("right-btn").ontouchend = function() {
     game.player.moveRight = false;
-  }
-
-  document.getElementById("left-btn").onmouseover = function() {
-    game.player.moveLeft = true;
-    console.log("hola")
-  }
-  document.getElementById("left-btn").onmouseout = function() {
-    game.player.moveLeft = false;
   }
 }
