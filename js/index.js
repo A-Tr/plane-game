@@ -29,6 +29,6 @@ window.onload = function() {
   }
 
   document.getElementById("spec-shoot").ontouchstart = function () {
-    game.player.shootSpecial()
+      game.player.shootSpecial()
   }
 }

@@ -24,8 +24,8 @@ canvas {
   height: 80px;
   font-family: "Orbitron", sans-serif;
   position: absolute;
-  bottom: 300px;
-  left: 100px;
+  bottom: 100px;
+  left: 80px;
   border-radius: 10px;
   background-color: darkmagenta;
   text-align: center;
@@ -33,6 +33,7 @@ canvas {
   color: #00ffff;
   font-size: 32px;
   font-weight: bold;
+  z-index: 1;
 }
 
 .tch-ctrl {
@@ -43,7 +44,7 @@ canvas {
   background-color: lightgray;
   opacity: 0.3;
   bottom: 40px;
-  z-index: 1;
+  z-index: 0.8;
 }
 
 #spec-shoot {
@@ -60,7 +61,11 @@ canvas {
 img {
   display: block;
   position: absolute;
-  top: 0;
+  width: 90%;
+  top: 30px;
+  left: 10px;
+  margin: 0 auto;
+  z-index: 0;
 }
 
 @media (min-width: 800px) {

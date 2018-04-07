@@ -187,13 +187,13 @@ Game.prototype.clear = function() {
 // Dibujar puntuación
 Game.prototype.scoreDraw = function() {
   (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#00ffff");
-  this.ctx.fillText(this.score, 190, this.canvas.height - 10);
+  this.ctx.fillText(this.score, this.canvas.width / 2 - 24, this.canvas.height - 20);
 };
 
 // Dibujar vidas
 Game.prototype.healthDraw = function() {
   var that = this;
-  this.x = 10;
+  this.x = 0;
   this.y = this.canvas.height - 40;
   this.img = new Image();
   this.img.src = "images/item_3.png";
@@ -206,17 +206,17 @@ Game.prototype.healthDraw = function() {
       this.img.height,
       this.x,
       this.y,
-      28,
-      28
+      24,
+      24
     );
-    this.x += 30;
+    this.x += 28;
   }
 };
 
 // Dibujar munición especial
 Game.prototype.specialDraw = function() {
   var that = this;
-  this.x = 280;
+  this.x = this.canvas.width - 84;
   this.y = this.canvas.height - 40;
   this.img = new Image();
   this.img.src = "images/bomb.png";
@@ -229,10 +229,10 @@ Game.prototype.specialDraw = function() {
       this.img.height,
       this.x,
       this.y,
-      32,
-      32
+      24,
+      24
     );
-    this.x += 30;
+    this.x += 28;
   }
 };
 
