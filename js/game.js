@@ -438,9 +438,11 @@ Game.prototype.update = function() {
       if (this.checkCollision(i, this.player)) {
         var indexI = this.items.indexOf(i);
         if (indexI > -1) {
-          this.items.splice(indexI, 1);
-          this.sounds[1].play();
           this.score += 50;
+          this.items.splice(indexI, 1);
+          if (i.itemType == "points") {
+            this.sounds[1].play();
+          }
           if (i.itemType == "weapon" && this.player.playerLevel <= 2) {
             this.player.playerLevel++;
             this.sounds[3].play();
@@ -450,7 +452,7 @@ Game.prototype.update = function() {
             return;
           } else if (i.itemType == "special" && this.player.specialCount < 3) {
             this.player.specialCount++;
-            this.sounds[3].play();
+            this.sounds[4].play();
           }
         }
       }
