@@ -1,18 +1,19 @@
 //Construir el jugador
 function Player(game) {
-  this.x = 160;
-  this.y = 620;
   this.game = game;
-
+  
   this.vx = 1;
   this.ax = 5;
-
+  
   this.moveLeft = false;
   this.moveRight = false;
-
+  
   this.width = 76;
   this.height = 100;
-
+  
+  this.x = 160;
+  this.y = this.game.canvas.height - 120;
+  
   this.health = 1;
   this.projectiles = [];
   this.specialCount = 3;

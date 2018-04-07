@@ -3,9 +3,11 @@ function Enemy(game, enemyType) {
   this.y = 0;
 
   this.vy = 1;
-
+  
   this.game = game;
-
+  
+  this.maxX = this.game.canvas.width;
+  this.maxY = this.game.canvas.height - 200;
   this.enemyType = enemyType;
 
   this.width = 98;
@@ -149,14 +151,14 @@ Enemy.prototype.draw = function() {
 };
 
 Enemy.prototype.move = function() {
-  if (this.x + this.width > 400) {
-    this.x = this.game.canvas.width - 1 - this.width;
+  if (this.x + this.width > this.maxX) {
+    this.x = this.maxX - this.width - 1;
     this.vx = this.vx * -1;
   } else if (this.x < 0) {
     this.x = 1;
     this.vx = this.vx * -1;
-  } else if (this.y >= 500) {
-    this.y = 499;
+  } else if (this.y >= this.maxY) {
+    this.y = this.maxY - 1;
     this.vx = 3;
     this.x += this.vx;
     this.vy = 0;

@@ -3,18 +3,19 @@ body {
   background-size: cover;
   font-family: 'Orbitron', sans-serif;
   color: #00ffff;
-  font-size: 20px
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 canvas {
-  border: 1px solid black;
   display: block;
   background-color: #FFF;
+  margin: 0 auto;
 }
 
-#instructions {
-  text-align: center;
-  width: 400px; 
+#game {
+  position: relative;
 }
 
 #start-btn {
@@ -22,7 +23,7 @@ canvas {
   height: 80px;
   font-family: 'Orbitron', sans-serif;
   position: absolute;
-  bottom: 400px;
+  bottom: 300px;
   left: 100px;
   border-radius: 10px;
   background-color: darkmagenta;
@@ -33,20 +34,6 @@ canvas {
   font-weight: bold;
 }
 
-img {
-  display: inline-block;
-  margin-top: 50px;
-}
-
-h2 {
-  font-size: 50px;
-}
-
-#game {
-  width: 400px;
-  position: relative;
-}
-
 .tch-ctrl {
   position: relative;
   border-radius: 50%;
@@ -54,10 +41,10 @@ h2 {
   width: 80px;
   background-color: lightgray;
   opacity: 0.5;
-  bottom: 180px;
+  bottom: 120px;
   z-index: 1;
 }
 
 #right-btn {
-  left: 240px;
+  left: 210px;
 }

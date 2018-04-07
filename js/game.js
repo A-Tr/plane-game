@@ -3,7 +3,7 @@ function Game(canvas) {
   this.ctx = this.canvas.getContext("2d");
   this.gameOn = false;
 
-  if (window.innerWidth > 400) {
+  if (window.innerWidth > 500) {
     this.canvas.width = 400;
     this.canvas.height = 800;
   } else {
@@ -120,15 +120,12 @@ Game.prototype.start = function() {
       }
 
       this.generateItem();
-
+      
       if (this.framesCounter % 5 == 0) {
         this.player.shoot();
       }
 
       this.enemyShoot();
-      // this.checkEnemyDamage();
-      // this.checkItem();
-      // this.checkPlayerDamage();
 
       this.update();
       this.move();
@@ -204,21 +201,21 @@ Game.prototype.gameOver = function() {
 Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.activeProjectiles = this.activeProjectiles.filter(function(p) {
-    return p.y < 800;
+    return p.y < this.canvas.height;
   });
 };
 
 // Dibujar puntuación
 Game.prototype.scoreDraw = function() {
   (this.ctx.font = "bold 24px Orbitron"), (this.ctx.fillStyle = "#00ffff");
-  this.ctx.fillText(this.score, 190, 790);
+  this.ctx.fillText(this.score, 190, this.canvas.height - 10);
 };
 
 // Dibujar vidas
 Game.prototype.healthDraw = function() {
   var that = this;
   this.x = 10;
-  this.y = 720;
+  this.y = this.canvas.height - 40;
   this.img = new Image();
   this.img.src = "images/item_3.png";
   for (i = 1; i <= that.player.health; i++) {
@@ -241,7 +238,7 @@ Game.prototype.healthDraw = function() {
 Game.prototype.specialDraw = function() {
   var that = this;
   this.x = 280;
-  this.y = 720;
+  this.y = this.canvas.height - 40;
   this.img = new Image();
   this.img.src = "images/bomb.png";
   for (i = 1; i <= that.player.specialCount; i++) {
@@ -413,7 +410,7 @@ Game.prototype.update = function() {
       if (this.checkCollision(e, this.player)) {
         var indexE = this.activeProjectiles.indexOf(e);
         if (indexE > -1 && this.player.isDamaged === false) {
-          this.player.health -= 1;
+          // this.player.health -= 1;
           if (this.player.playerLevel > 1) {
             this.player.playerLevel -= 1;
           }
